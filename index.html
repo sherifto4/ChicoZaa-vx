@@ -123,6 +123,11 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
 .f input,.f select,.f textarea{background:#0a0a0d;border:1px solid var(--ln);border-radius:10px;padding:8px 12px;min-height:42px;width:100%}
 .li{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--ln)}.li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .toast{position:fixed;inset-inline:0;margin:auto;width:max-content;max-width:90%;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#17171c;border:1px solid var(--red2);padding:10px 18px;border-radius:12px;z-index:99;opacity:0;translate:0 16px;transition:.3s;pointer-events:none}.toast.on{opacity:1;translate:0 0}
+[hidden]{display:none!important}
+.srch{position:relative;display:block}.srch input{padding-inline-end:52px}.srch input::-webkit-search-cancel-button{display:none}
+.qc{position:absolute;inset-block:0;inset-inline-end:6px;margin:auto 0;width:36px;height:36px;border:0;border-radius:50%;background:#1b1b21;color:var(--fg);cursor:pointer}
+.pv{width:100%;max-height:200px;object-fit:cover;border-radius:10px;border:1px solid var(--ln)}
+.th{width:44px;height:32px;object-fit:cover;border-radius:6px;flex:none}.f input[type=file]{padding:8px}
 /* ===== الحركات (animations) ===== */
 @keyframes fade{from{opacity:0}}@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}}
 @keyframes flick{0%,92%,100%{filter:drop-shadow(0 0 12px rgba(255,30,50,.35))}94%{filter:drop-shadow(0 0 2px rgba(255,30,50,.1))}96%{filter:drop-shadow(0 0 22px rgba(255,30,50,.7))}}
@@ -143,7 +148,7 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
   <a href="#home" data-go="all" aria-label="ChicoZAA"><img class="logo-n" id="ln" alt="ChicoZAA"></a>
   <nav class="links" id="lk"></nav><span class="sp"></span>
   <button class="btn s" id="lang" aria-label="Language">EN</button>
-  <button class="btn s" id="mg" aria-label="Manage">⚙</button>
+  <button class="btn s" id="mg" aria-label="Manage" hidden>⚙</button>
   <button class="btn s bg" id="bg" aria-label="Menu" aria-expanded="false">☰</button>
 </div></header>
 <!-- قائمة الموبايل -->
@@ -167,7 +172,7 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
 
 <!-- ===== البحث وأزرار التصنيف ===== -->
 <div class="tools" id="work"><div class="w">
-  <label class="srch"><input id="q" type="search" autocomplete="off" data-ph="search" aria-label="search"></label>
+  <label class="srch"><input id="q" type="search" autocomplete="off" data-ph="search" aria-label="search"><button type="button" class="qc" id="qc" aria-label="clear" hidden>✕</button></label>
   <div class="pills" id="pl" role="group"></div>
 </div></div>
 <!-- ===== كل المشاريع ===== -->
@@ -190,28 +195,39 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
 <!-- نافذة تفاصيل المشروع واللعبة -->
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="mw" id="mw"></div></div>
 <!-- لوحة إدارة المشاريع (زرار ⚙) -->
-<aside class="side" id="sd" aria-label="Manager">
+<aside class="side" id="sd" aria-label="Admin">
   <div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0;font-size:22px" data-i="mgT"></h2><button class="btn s" id="sx" aria-label="close">✕</button></div>
-  <p style="color:var(--dim);font-size:13px;margin:6px 0" data-i="mgH"></p>
-  <div class="f">
-    <input type="hidden" id="fid">
-    <label><span data-i="fT"></span><input id="fN" maxlength="60"></label>
-    <label><span data-i="fC"></span><select id="fK"></select></label>
-    <label><span data-i="fD"></span><textarea id="fA" rows="2" maxlength="220"></textarea></label>
-    <label><span data-i="fE"></span><textarea id="fB" rows="2" maxlength="220"></textarea></label>
-    <label><span data-i="fS"></span><select id="fS"></select></label>
-    <label><span data-i="fU"></span><input id="fU" dir="ltr" type="url" placeholder="https://"></label>
-    <label><span data-i="fI"></span><input id="fI" dir="ltr" type="url" placeholder="https://"></label>
-    <label><span data-i="fG"></span><input id="fG"></label>
-    <label><span><input type="checkbox" id="fM" style="width:auto;min-height:0"> <span data-i="fM"></span></span></label>
-    <label><span><input type="checkbox" id="fF" style="width:auto;min-height:0"> <span data-i="fF"></span></span></label>
-    <div class="row"><button class="btn r s" id="fv" data-i="save"></button><button class="btn s" id="fc" data-i="clear"></button></div>
+  <p id="am" style="color:var(--dim);font-size:13px;margin:6px 0;word-break:break-word"></p>
+  <div class="f" id="lg" hidden>
+    <label><span data-i="em"></span><input id="le" type="email" dir="ltr" autocomplete="username"></label>
+    <label><span data-i="pw"></span><input id="lp" type="password" dir="ltr" autocomplete="current-password"></label>
+    <button class="btn r" id="li2" data-i="login"></button>
   </div>
-  <div class="row" style="margin-bottom:10px"><button class="btn s" id="ex" data-i="exp"></button><button class="btn s" id="rs2" data-i="reset"></button></div>
-  <div id="ml"></div>
+  <div class="row" id="ar" style="margin-bottom:8px" hidden><button class="btn s" id="lo" data-i="logout"></button><button class="btn s" id="im" data-i="imp" hidden></button></div>
+  <div id="ad" hidden>
+    <div class="f">
+      <input type="hidden" id="fid">
+      <label><span data-i="fT"></span><input id="fN" maxlength="60"></label>
+      <label><span data-i="fC"></span><select id="fK"></select></label>
+      <label><span data-i="fD"></span><textarea id="fA" rows="2" maxlength="220"></textarea></label>
+      <label><span data-i="fE"></span><textarea id="fB" rows="2" maxlength="220"></textarea></label>
+      <label><span data-i="fS"></span><select id="fS"></select></label>
+      <label><span><input type="checkbox" id="fAv" style="width:auto;min-height:0"> <span data-i="fV"></span></span></label>
+      <label><span data-i="fU"></span><input id="fU" dir="ltr" type="url" placeholder="https://"></label>
+      <label><span data-i="fP"></span><input id="fP" type="file" accept="image/*"></label>
+      <img class="pv" id="pv" alt="" hidden>
+      <label><span data-i="fI"></span><input id="fI" dir="ltr" type="url" placeholder="https://"></label>
+      <label><span data-i="fG"></span><input id="fG"></label>
+      <label><span><input type="checkbox" id="fM" style="width:auto;min-height:0"> <span data-i="fM"></span></span></label>
+      <label><span><input type="checkbox" id="fF" style="width:auto;min-height:0"> <span data-i="fF"></span></span></label>
+      <div class="row"><button class="btn r s" id="fv" data-i="save"></button><button class="btn s" id="fc" data-i="clear"></button></div>
+    </div>
+    <div id="ml"></div>
+  </div>
 </aside>
 <div class="toast" id="ts" role="status"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded',function(){'use strict';
 // الصور المدمجة (اللوجو والكروت) موجودة في آخر الملف
@@ -237,6 +253,8 @@ var NEW_RELEASES=[
 ];
 var S={ar:{nav:['الرئيسية','الألعاب','التطبيقات','المشاريع','التصميمات','عني','تواصل'],all:'الكل',new:'جديد',intro:'مطوّر ألعاب ومصمم إبداعي.. أقدّم لكم عالمي الرقمي من ألعاب وتطبيقات ومشاريع مميزة بتصميم احترافي.',explore:'استكشف أعمالي',more:'تعرّف عليّ أكثر',featured:'أعمال مميزة',featSub:'بعض من أفضل مشاريعي التي أفتخر بها',recent:'أضيف حديثًا',search:'🔎 ابحث عن مشروع...',aboutT:'عني',a1:'أنا ChicoZAA: أبني ألعابًا وتطبيقات ومواقع وأصمّم هويات بصرية بروح الشارع والجرافيتي.',a2:'كل مشروع هنا يبدأ بحلم، يتحوّل إلى عمل، ثم يصبح تجربة تلعبها.',contactBtn:'تواصل معي',boxT:'استوديو مستقل يجمع الألعاب والتصميم والكود.',contactT:'تواصل',cSub:'اختر القناة الأنسب لك.',tileMore:'مشاهدة المزيد',tiles:[['الألعاب','ألعاب ممتعة ومميزة للجميع'],['التطبيقات','تطبيقات وأدوات مفيدة'],['المشاريع','مواقع وتجارب مبتكرة'],['التصميمات','أعمال تصميم احترافية']],types:{game:'لعبة',app:'تطبيق',project:'مشروع',design:'تصميم'},act:{game:'العب الآن',app:'تحميل',project:'فتح',design:'مشاهدة'},st:{live:'متاح',dev:'قيد التطوير',soon:'قريبًا'},empty:'لا توجد نتائج. جرّب كلمة أخرى أو صنّفًا آخر.',noUrl:'لم يُضف رابط لهذا المشروع بعد. أضفه من ⚙.',count:'مشروع',tabNote:'فتح في تبويب جديد',close:'إغلاق',mgT:'إدارة المشاريع',mgH:'تُحفظ التعديلات في متصفحك. انسخ JSON وضعه في SEED داخل الملف لتثبيتها للجميع.',fT:'الاسم',fC:'التصنيف',fD:'الوصف بالعربية',fE:'الوصف بالإنجليزية',fS:'الحالة',fU:'رابط المشروع',fI:'رابط صورة الغلاف',fG:'وسوم (مفصولة بفاصلة)',fM:'تشغيل داخل الصفحة (iframe)',fF:'مميز',save:'حفظ',clear:'مسح',exp:'نسخ JSON',reset:'استعادة الأمثلة',edit:'تعديل',del:'حذف',saved:'تم الحفظ',deleted:'تم الحذف',copied:'تم نسخ JSON',conf:'تأكيد؟',score:'النتيجة',over:'انتهت — اضغط للإعادة'},
 en:{nav:['Home','Games','Apps','Projects','Designs','About','Contact'],all:'All',new:'New',intro:'Game developer and creative designer. Welcome to my digital world of games, apps and standout projects with a professional touch.',explore:'Explore My Work',more:'Discover More',featured:'Featured Work',featSub:'Some of the projects I’m proud of',recent:'Recently Added',search:'🔎 Search projects...',aboutT:'About',a1:'I’m ChicoZAA. I build games, apps and websites, and design visual identities with a street-art spirit.',a2:'Every project here starts as a dream, becomes a build, then turns into something you can play.',contactBtn:'Contact me',boxT:'An independent studio blending games, design and code.',contactT:'Contact',cSub:'Pick the channel that suits you.',tileMore:'View more',tiles:[['Games','Fun, standout games for everyone'],['Apps','Useful apps and tools'],['Projects','Websites and experiments'],['Designs','Professional design work']],types:{game:'Game',app:'App',project:'Project',design:'Design'},act:{game:'Play now',app:'Download',project:'Open',design:'View'},st:{live:'Live',dev:'In development',soon:'Coming soon'},empty:'No results. Try another word or category.',noUrl:'No link added for this project yet. Add one from ⚙.',count:'projects',tabNote:'Open in new tab',close:'Close',mgT:'Manage projects',mgH:'Changes are saved in your browser. Copy the JSON into SEED in the file to publish them for everyone.',fT:'Title',fC:'Category',fD:'Arabic description',fE:'English description',fS:'Status',fU:'Project link',fI:'Cover image link',fG:'Tags (comma separated)',fM:'Run inside the page (iframe)',fF:'Featured',save:'Save',clear:'Clear',exp:'Copy JSON',reset:'Restore samples',edit:'Edit',del:'Delete',saved:'Saved',deleted:'Deleted',copied:'JSON copied',conf:'Confirm?',score:'Score',over:'Game over — tap to retry'}};
+Object.assign(S.ar,{mgT:'لوحة الإدارة',mgH:'دخول المالك فقط.',em:'البريد الإلكتروني',pw:'كلمة المرور',login:'دخول',logout:'تسجيل خروج',imp:'استيراد المشاريع الحالية',fP:'صورة الغلاف (من الهاتف)',fI:'أو رابط صورة (https)',fV:'متاح',na:'غير متاح',noCfg:'أضف SB_URL و SB_KEY داخل الملف (راجع SETUP_AR.md).',deny:'هذا الحساب ليس مديرًا.',bad:'بيانات الدخول غير صحيحة',out:'تم تسجيل الخروج',fail:'تعذّر التنفيذ',badImg:'تعذّر قراءة الصورة',bi:'مدمج — استورده للتعديل'});
+Object.assign(S.en,{mgT:'Admin dashboard',mgH:'Owner access only.',em:'Email',pw:'Password',login:'Sign in',logout:'Sign out',imp:'Import current projects',fP:'Cover image (from phone)',fI:'or image link (https)',fV:'Available',na:'Unavailable',noCfg:'Set SB_URL and SB_KEY in the file (see SETUP_AR.md).',deny:'This account is not an admin.',bad:'Wrong email or password',out:'Signed out',fail:'Action failed',badImg:'Could not read the image',bi:'Built-in — import to edit'});
 // ===== ٥) دوال مساعدة وحفظ البيانات في المتصفح =====
 var KEY='chz2_projects',LK='chz2_lang',TY=['game','app','project','design'];
 function $(s){return document.querySelector(s)}function findP(id){return list.concat(NEW_RELEASES).find(function(x){return x.id===id})}
@@ -244,10 +262,8 @@ function $$(s){return document.querySelectorAll(s)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 var lang=ld(LK)==='en'?'en':'ar',L=S[lang],list;
-try{list=JSON.parse(ld(KEY)||'null')}catch(e){list=null}
-if(!Array.isArray(list))list=JSON.parse(JSON.stringify(SEED));
+list=SEED.slice();
 SEED.forEach(function(p){p.img=p.img||''});
-function fixImg(){list.forEach(function(p){var s=SEED.find(function(x){return x.id===p.id});if(s&&!p.img)p.img=s.img})}fixImg();
 var st={f:'all',q:''};
 var NAVF=['all','game','app','project','design','about','contact'];
 ['ln','lf'].forEach(function(i){$('#'+i).src=IMG.nav});$('#lh').src=IMG.logo;$('#ch').src=IMG.char;
@@ -259,14 +275,14 @@ function cov(p){
 }
 function desc(p){return lang==='en'?(p.e||p.d):(p.d||p.e)}
 function card(p){
-  var isNew=p.at>=6;
-  return '<article class="card rv" tabindex="0" role="button" data-id="'+esc(p.id)+'"><div class="cv">'+cov(p)+'<div class="tg"><span>'+L.types[p.type]+'</span>'+(isNew?'<span style="background:var(--red);border-color:transparent">'+L.new+'</span>':'')+'</div><span class="st '+esc(p.st)+'">'+L.st[p.st]+'</span></div><div class="bd"><h3>'+esc(p.t)+'</h3><p>'+esc(desc(p))+'</p><div class="ft"><small>'+(p.tags||[]).slice(0,2).map(function(x){return '#'+esc(x)}).join(' ')+'</small><button class="btn r s" data-act="'+esc(p.id)+'">'+L.act[p.type]+'</button></div></div></article>';
+  var isNew=isN(p);
+  return '<article class="card rv" tabindex="0" role="button" data-id="'+esc(p.id)+'"><div class="cv">'+cov(p)+'<div class="tg"><span>'+L.types[p.type]+'</span>'+(isNew?'<span style="background:var(--red);border-color:transparent">'+L.new+'</span>':'')+'</div><span class="st '+stc(p)+'">'+stl(p)+'</span></div><div class="bd"><h3>'+esc(p.t)+'</h3><p>'+esc(desc(p))+'</p><div class="ft"><small>'+(p.tags||[]).slice(0,2).map(function(x){return '#'+esc(x)}).join(' ')+'</small><button class="btn r s" data-act="'+esc(p.id)+'">'+L.act[p.type]+'</button></div></div></article>';
 }
+function nz(s){return String(s||'').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
 function ok(p){
-  if(st.f==='new'&&p.at<6)return false;
-  if(TY.indexOf(st.f)>-1&&p.type!==st.f)return false;
-  var q=st.q.trim().toLowerCase();if(!q)return true;
-  var h=[p.t,p.d,p.e,L.types[p.type],p.type,(p.tags||[]).join(' ')].join(' ').toLowerCase();
+  var q=nz(st.q.trim());
+  if(!q){if(st.f==='new'&&!isN(p))return false;if(TY.indexOf(st.f)>-1&&p.type!==st.f)return false;return true}
+  var h=nz([p.t,p.d,p.e,S.ar.types[p.type],S.en.types[p.type],p.type,(p.tags||[]).join(' ')].join(' '));
   return q.split(/\s+/).every(function(w){return h.indexOf(w)>-1});
 }
 var EMPTY='<svg viewBox="0 0 90 70"><path d="M14 56 L20 22 L36 38 L45 12 L54 38 L70 22 L76 56Z" fill="none" stroke="#d90f23" stroke-width="4" stroke-linejoin="round"/><path d="M30 64 L60 64" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/><path d="M38 30 l14 14 m0-14 l-14 14" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/></svg>';
@@ -307,8 +323,8 @@ var last=null,raf=0;
 function openM(id){
   var p=findP(id);if(!p)return;last=document.activeElement;
   var safe=/^(https:\/\/|\.\/)/.test(p.url||'');
-  var top=p.play==='dodge'?'<canvas id="gm" width="320" height="380"></canvas>':(p.embed&&safe?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>':'<div class="cv" style="aspect-ratio:16/8">'+cov(p)+'</div>');
-  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><span class="st '+esc(p.st)+'" style="position:static;display:inline-block">'+L.st[p.st]+'</span> <span style="color:var(--mut)">'+L.types[p.type]+'</span><h2>'+esc(p.t)+'</h2><p style="color:var(--mut);margin:0">'+esc(desc(p))+'</p><div class="chips">'+(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('')+'</div><div class="row">'+(p.play==='dodge'?'':'<button class="btn r" id="go">'+L.act[p.type]+'</button>')+(p.embed&&safe?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
+  var top=p.play==='dodge'?'<canvas id="gm" width="320" height="380"></canvas>':(p.embed&&safe&&p.av!==false?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>':'<div class="cv" style="aspect-ratio:16/8">'+cov(p)+'</div>');
+  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><span class="st '+stc(p)+'" style="position:static;display:inline-block">'+stl(p)+'</span> <span style="color:var(--mut)">'+L.types[p.type]+'</span><h2>'+esc(p.t)+'</h2><p style="color:var(--mut);margin:0">'+esc(desc(p))+'</p><div class="chips">'+(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('')+'</div><div class="row">'+(p.play==='dodge'?'':'<button class="btn r" id="go"'+(p.av===false?' disabled':'')+'>'+L.act[p.type]+'</button>')+(p.embed&&safe?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
   $('#ov').classList.add('on');$('#mx').onclick=$('#mc').onclick=closeM;$('#mx').focus();
   var g=$('#go');if(g)g.onclick=function(){if(safe)window.open(p.url,'_blank','noopener,noreferrer');else toast(L.noUrl)};
   if(p.play==='dodge')dodge($('#gm'));
@@ -331,26 +347,103 @@ function dodge(c){
   })();
 }
 var tt;function toast(m){var e=$('#ts');e.textContent=m;e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},2600)}
-// ===== ٨) لوحة الإدارة (إضافة / تعديل / حذف) =====
-/* manager */
-function persist(){sv(KEY,JSON.stringify(list.map(function(p){var q=Object.assign({},p);if(q.img&&q.img.indexOf('data:')===0)q.img='';return q})))}
-function mlist(){$('#ml').innerHTML=list.map(function(p){return '<div class="li"><span>'+esc(p.t)+'</span><button class="btn s" data-e="'+esc(p.id)+'">'+L.edit+'</button><button class="btn s" data-d="'+esc(p.id)+'" aria-label="'+L.del+' '+esc(p.t)+'">'+L.del+'</button></div>'}).join('')}
-function fill(p){$('#fid').value=p?p.id:'';$('#fN').value=p?p.t:'';$('#fK').value=p?p.type:'game';$('#fA').value=p?p.d:'';$('#fB').value=p?p.e:'';$('#fS').value=p?p.st:'dev';$('#fU').value=p?p.url:'';$('#fI').value=p&&p.img&&p.img.indexOf('data:')!==0?p.img:'';$('#fG').value=p?(p.tags||[]).join(', '):'';$('#fM').checked=!!(p&&p.embed);$('#fF').checked=!!(p&&p.feat)}
-function after(){persist();render();mlist()}
+// ===== ٨) لوحة الإدارة الحقيقية: قاعدة بيانات + دخول + رفع صور (Supabase – خطة مجانية) =====
+/* ضع بيانات مشروعك من Supabase > Settings > API. مفتاح anon public آمن للنشر (محميّ بقواعد RLS). ممنوع وضع service_role هنا. */
+var SB_URL='https://qzqpfllqpsyxqjzprhnf.supabase.co',SB_KEY='sb_publishable_wF8yln9R65KXk_xfooLtLw_ELqLS08E';
+var sb=null,isAd=false,cur=null,pend=null,imported=false,rt=0;
+try{if(SB_URL&&SB_KEY&&window.supabase)sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){sb=null}
+function isN(p){return p.at>=6&&(p.at<1e6||Date.now()-p.at<12096e5)}
+function stc(p){return p.av===false?'soon':p.st}
+function stl(p){return p.av===false?L.na:L.st[p.st]}
+function m2p(r){return{id:r.id,type:r.type,t:r.title,d:r.desc_ar,e:r.desc_en,tags:r.tags||[],st:r.status,av:r.available,url:r.url||'',embed:r.embed,img:r.cover||'',feat:r.featured,play:r.play||'',seed:r.seed_id,at:Date.parse(r.created_at)}}
+function fail(e){toast(L.fail+(e&&e.message?' — '+e.message:''))}
+function msg(t){$('#am').textContent=t||''}
+function load(){
+  if(!sb)return;
+  sb.from('projects').select('*').order('created_at',{ascending:false}).then(function(r){
+    if(r.error||!r.data)return;
+    var c=r.data.map(m2p);imported=c.some(function(p){return p.seed});
+    if(imported)NEW_RELEASES.length=0;
+    list=c.concat(imported?[]:SEED);render();mlist();
+  });
+}
+function cloud(){
+  if(!sb)return;load();
+  if(!rt){rt=1;sb.channel('pj').on('postgres_changes',{event:'*',schema:'public',table:'projects'},load).subscribe();
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)load()})}
+}
+function gate(){
+  ['#lg','#ar','#ad'].forEach(function(s){$(s).hidden=true});
+  if(!sb){msg(L.noCfg);return}
+  sb.auth.getSession().then(function(r){
+    var s=r.data&&r.data.session;
+    if(!s){isAd=false;$('#mg').hidden=true;$('#lg').hidden=false;msg(L.mgH);mlist();return}
+    $('#ar').hidden=false;
+    sb.from('admins').select('user_id').eq('user_id',s.user.id).then(function(q){
+      isAd=!!(q.data&&q.data.length);$('#mg').hidden=!isAd;$('#ad').hidden=!isAd;msg(isAd?s.user.email:L.deny);mlist();
+    });
+  });
+}
+function sd(o){$('#sd').classList.toggle('on',o);if(o){gate();$('#sx').focus()}}
+function chkH(){if(location.hash==='#admin'){sd(true);history.replaceState(null,'',location.pathname+location.search)}}
+addEventListener('hashchange',chkH);
+$('#li2').onclick=function(){
+  if(!sb)return;var b=this;b.disabled=true;
+  sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value}).then(function(r){
+    b.disabled=false;$('#lp').value='';if(r.error)toast(L.bad);else gate();
+  });
+};
+$('#lp').onkeydown=function(e){if(e.key==='Enter')$('#li2').click()};
+$('#lo').onclick=function(){sb.auth.signOut().then(function(){isAd=false;gate();toast(L.out)})};
+function mlist(){
+  var el=$('#ml');if(!el)return;$('#im').hidden=imported||!isAd;
+  el.innerHTML=isAd?list.map(function(p){var c=p.at>1e6;
+    return '<div class="li">'+(p.img?'<img class="th" alt="" src="'+esc(p.img)+'">':'')+'<span>'+esc(p.t)+'</span>'+(c?'<button class="btn s" data-e="'+esc(p.id)+'">'+L.edit+'</button><button class="btn s" data-d="'+esc(p.id)+'" aria-label="'+L.del+' '+esc(p.t)+'">'+L.del+'</button>':'<small>'+L.bi+'</small>')+'</div>'}).join(''):'';
+}
+function pv(u){var i=$('#pv');i.hidden=!u;if(u)i.src=u}
+function fill(p){
+  cur=p||null;pend=null;
+  $('#fid').value=p?p.id:'';$('#fN').value=p?p.t:'';$('#fK').value=p?p.type:'game';$('#fA').value=p?p.d:'';$('#fB').value=p?p.e:'';
+  $('#fS').value=p?p.st:'live';$('#fAv').checked=p?p.av!==false:true;$('#fU').value=p?p.url:'';$('#fI').value=p?p.img:'';
+  $('#fG').value=p?(p.tags||[]).join(', '):'';$('#fM').checked=!!(p&&p.embed);$('#fF').checked=!!(p&&p.feat);$('#fP').value='';pv(p?p.img:'');
+}
+function shrink(f){return new Promise(function(res,rej){var u=URL.createObjectURL(f),im=new Image();
+  im.onload=function(){var s=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){b?res(b):rej()},'image/webp',.82)};
+  im.onerror=rej;im.src=u})}
+$('#fP').onchange=function(){var f=this.files[0];if(!f)return;shrink(f).then(function(b){pend=b;pv(URL.createObjectURL(b))},function(){toast(L.badImg)})};
+function up(b){
+  var x=b.type==='image/webp'?'webp':b.type==='image/png'?'png':'jpg',n=Date.now().toString(36)+Math.random().toString(36).slice(2,8)+'.'+x;
+  return sb.storage.from('covers').upload(n,b,{contentType:b.type,cacheControl:'31536000'}).then(function(r){
+    if(r.error)throw r.error;return sb.storage.from('covers').getPublicUrl(n).data.publicUrl});
+}
+function rmImg(u){var m=/\/covers\/([^/?]+)$/.exec(u||'');if(m)sb.storage.from('covers').remove([m[1]])}
 $('#fv').onclick=function(){
-  var n=$('#fN').value.trim();if(!n){$('#fN').focus();return}
-  var id=$('#fid').value||'c'+Date.now().toString(36),o=list.find(function(x){return x.id===id});
-  var p={id:id,type:$('#fK').value,t:n,d:$('#fA').value.trim(),e:$('#fB').value.trim(),tags:$('#fG').value.split(/[,،]/).map(function(s){return s.trim()}).filter(Boolean),st:$('#fS').value,url:$('#fU').value.trim(),embed:$('#fM').checked,img:$('#fI').value.trim()||(o?o.img:''),feat:$('#fF').checked,at:o?o.at:Math.max.apply(null,list.map(function(x){return x.at||0}).concat(0))+1};
-  if(o)Object.assign(o,p);else list.unshift(p);fill(null);after();toast(L.saved);
+  if(!sb||!isAd)return;var n=$('#fN').value.trim();if(!n){$('#fN').focus();return}
+  var b=this,old=cur?cur.img:'',id=$('#fid').value;b.disabled=true;
+  Promise.resolve(pend?up(pend):$('#fI').value.trim()).then(function(img){
+    if(img&&!/^https:\/\//.test(img))img='';
+    var row={type:$('#fK').value,title:n,desc_ar:$('#fA').value.trim(),desc_en:$('#fB').value.trim(),status:$('#fS').value,available:$('#fAv').checked,url:$('#fU').value.trim(),cover:img,
+      tags:$('#fG').value.split(/[,،]/).map(function(s){return s.trim()}).filter(Boolean),embed:$('#fM').checked,featured:$('#fF').checked};
+    return Promise.resolve(id?sb.from('projects').update(row).eq('id',id):sb.from('projects').insert(row)).then(function(r){
+      if(r.error)throw r.error;if(old&&old!==img)rmImg(old);fill(null);toast(L.saved);load()});
+  }).catch(fail).then(function(){b.disabled=false});
 };
 $('#fc').onclick=function(){fill(null)};
-$('#ml').onclick=function(e){var a=e.target.closest('[data-e]'),d=e.target.closest('[data-d]');
+$('#ml').onclick=function(e){
+  var a=e.target.closest('[data-e]'),d=e.target.closest('[data-d]');
   if(a)fill(list.find(function(x){return x.id===a.dataset.e}));
-  if(d&&confirm(L.conf)){list=list.filter(function(x){return x.id!==d.dataset.d});after();toast(L.deleted)}};
-$('#ex').onclick=function(){var j=JSON.stringify(list.map(function(p){var q=Object.assign({},p);if(q.img&&q.img.indexOf('data:')===0)delete q.img;return q}),null,1);
-  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(j).then(function(){toast(L.copied)},function(){prompt('JSON',j)});else prompt('JSON',j)};
-$('#rs2').onclick=function(){if(confirm(L.conf)){list=JSON.parse(JSON.stringify(SEED));fixImg();after();toast(L.saved)}};
-function sd(o){$('#sd').classList.toggle('on',o);if(o)$('#sx').focus()}
+  if(d&&confirm(L.conf)){var p=list.find(function(x){return x.id===d.dataset.d});
+    sb.from('projects').delete().eq('id',d.dataset.d).then(function(r){if(r.error)return fail(r.error);rmImg(p&&p.img);toast(L.deleted);load()})}
+};
+$('#im').onclick=function(){
+  if(!sb||!isAd||imported||!confirm(L.conf))return;var b=this;b.disabled=true;
+  Promise.all(SEED.concat(NEW_RELEASES).map(function(p){
+    var s=p.img&&p.img.indexOf('data:')===0?fetch(p.img).then(function(r){return r.blob()}).then(up):Promise.resolve(p.img||'');
+    var a=p.at||1,t=Date.now()-(a>=6?(100-a)*6e4:(20-a)*864e5);
+    return s.then(function(img){return{type:p.type,title:p.t,desc_ar:p.d||'',desc_en:p.e||'',status:p.st||'live',available:true,url:p.url||'',cover:img,tags:p.tags||[],embed:!!p.embed,featured:!!p.feat,play:p.play||null,seed_id:p.id,created_at:new Date(t).toISOString()}})
+  })).then(function(rows){return sb.from('projects').insert(rows)}).then(function(r){if(r.error)throw r.error;toast(L.saved);load()}).catch(fail).then(function(){b.disabled=false});
+};
 $('#mg').onclick=function(){sd(true)};$('#sx').onclick=function(){sd(false)};
 // ===== ٩) تشغيل الأزرار =====
 /* events */
@@ -368,7 +461,8 @@ document.addEventListener('keydown',function(e){
 });
 $('#ov').addEventListener('click',function(e){if(e.target===this)closeM()});
 $('#bg').onclick=function(){var o=$('#dn').classList.toggle('on');this.setAttribute('aria-expanded',o)};
-var qt;$('#q').oninput=function(){var v=this.value;clearTimeout(qt);qt=setTimeout(function(){st.q=v;render()},100)};
+var qt;$('#q').oninput=function(){var v=this.value;$('#qc').hidden=!v;clearTimeout(qt);qt=setTimeout(function(){st.q=v;render()},60)};
+$('#qc').onclick=function(){$('#q').value='';this.hidden=true;st.q='';render();$('#q').focus()};
 $('#lang').onclick=function(){lang=lang==='ar'?'en':'ar';sv(LK,lang);chrome()};
 $('#fs').parentNode.addEventListener('click',function(){});
 // ===== ١٠) حركة الجزيئات الحمراء =====
@@ -381,7 +475,7 @@ $('#fs').parentNode.addEventListener('click',function(){});
   function f(){x.clearRect(0,0,W,H);P.forEach(function(p){p.y-=p.v;p.x+=Math.sin(p.y/60)*.3+p.d*.1;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}x.beginPath();x.fillStyle='rgba(255,42,60,'+p.a+')';x.shadowColor='#ff2a3c';x.shadowBlur=8;x.arc(p.x,p.y,p.r,0,6.3);x.fill()});if(run&&!document.hidden)requestAnimationFrame(f);else if(run)setTimeout(f,500)}
   if(run)f();else{f()}
 })();
-chrome();
+chrome();cloud();gate();chkH();
 });
 </script>
 
