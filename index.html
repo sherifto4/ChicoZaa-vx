@@ -371,6 +371,16 @@ function cloud(){
   if(!rt){rt=1;sb.channel('pj').on('postgres_changes',{event:'*',schema:'public',table:'projects'},load).subscribe();
     document.addEventListener('visibilitychange',function(){if(!document.hidden)load()})}
 }
+function chkAdmin(id){
+  /* 1) دالة is_admin() في القاعدة (لا تعتمد على صلاحيات جدول admins) 2) احتياطيًا: قراءة صفك من admins */
+  return Promise.resolve(sb.rpc('is_admin')).then(function(r){
+    if(!r.error)return{ok:r.data===true};
+    return Promise.resolve(sb.from('admins').select('user_id').eq('user_id',id).limit(1)).then(function(q){
+      if(q.error)return{ok:false,err:q.error.message};
+      return{ok:!!(q.data&&q.data.length)};
+    });
+  });
+}
 function gate(){
   ['#lg','#ar','#ad'].forEach(function(s){$(s).hidden=true});
   if(!sb){msg(L.noCfg);return}
@@ -378,10 +388,11 @@ function gate(){
     var s=r.data&&r.data.session;
     if(!s){isAd=false;$('#mg').hidden=true;$('#lg').hidden=false;msg(L.mgH);mlist();return}
     $('#ar').hidden=false;
-    sb.from('admins').select('user_id').eq('user_id',s.user.id).then(function(q){
-      isAd=!!(q.data&&q.data.length);$('#mg').hidden=!isAd;$('#ad').hidden=!isAd;msg(isAd?s.user.email:L.deny);mlist();
+    return chkAdmin(s.user.id).then(function(x){
+      isAd=x.ok;$('#mg').hidden=!isAd;$('#ad').hidden=!isAd;
+      msg(isAd?s.user.email:L.deny+(x.err?' ['+x.err+']':' (ID: '+s.user.id+')'));mlist();
     });
-  });
+  }).catch(function(e){msg(String(e&&e.message||e))});
 }
 function sd(o){$('#sd').classList.toggle('on',o);if(o){gate();$('#sx').focus()}}
 function chkH(){if(location.hash==='#admin'){sd(true);history.replaceState(null,'',location.pathname+location.search)}}
