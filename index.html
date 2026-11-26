@@ -431,19 +431,27 @@ function stl(p){return p.av===false?L.na:L.st[p.st]}
 function m2p(r){return{id:r.id,type:r.type,t:r.title,d:r.desc_ar,e:r.desc_en,tags:r.tags||[],st:r.status,av:r.available,url:r.url||'',embed:r.embed,img:r.cover||'',feat:r.featured,play:r.play||'',seed:r.seed_id,at:Date.parse(r.created_at)}}
 function fail(e){toast(L.fail+(e&&e.message?' — '+e.message:''))}
 function msg(t){$('#am').textContent=t||''}
-function load(){
+/* ===== تحميل البيانات: أعمدة محددة + كاش محلي 10 دقائق + بدون Realtime ===== */
+var CK='cz_pj_v1',TTL=600000,COLS='id,type,title,desc_ar,desc_en,tags,status,available,url,embed,cover,featured,play,seed_id,created_at',rows=[],lastLoad=0,netAt=0,busy=0;
+function cget(){try{var o=JSON.parse(ld(CK)||'null');return o&&Array.isArray(o.r)&&Date.now()-o.t<TTL?o:null}catch(e){return null}}
+function cset(){sv(CK,JSON.stringify({t:Date.now(),r:rows}))}
+function apply(){var c=rows.map(m2p);imported=c.some(function(p){return p.seed});if(imported)NEW_RELEASES.length=0;list=c.concat(imported?[]:SEED);render();mlist()}
+function load(force){
   if(!sb)return;
-  sb.from('projects').select('*').order('created_at',{ascending:false}).then(function(r){
-    if(r.error||!r.data)return;
-    var c=r.data.map(m2p);imported=c.some(function(p){return p.seed});
-    if(imported)NEW_RELEASES.length=0;
-    list=c.concat(imported?[]:SEED);render();mlist();
-  });
+  var c=force?null:cget();
+  if(c){rows=c.r;lastLoad=c.t;apply();return}
+  if(busy)return;busy=1;
+  sb.from('projects').select(COLS).order('created_at',{ascending:false}).then(function(r){
+    busy=0;if(r.error||!r.data)return;
+    lastLoad=netAt=Date.now();rows=r.data;cset();apply();
+  },function(){busy=0});
 }
+/* تحديث محلي بعد الحفظ/الحذف بدل إعادة جلب الجدول كله */
+function putRow(r){var i=rows.findIndex(function(x){return x.id===r.id});if(i>-1)rows[i]=r;else rows.unshift(r);cset();apply()}
+function dropRow(id){rows=rows.filter(function(x){return x.id!==id});cset();apply()}
 function cloud(){
   if(!sb)return;load();
-  if(!rt){rt=1;sb.channel('pj').on('postgres_changes',{event:'*',schema:'public',table:'projects'},load).subscribe();
-    document.addEventListener('visibilitychange',function(){if(!document.hidden)load()})}
+  if(!rt){rt=1;document.addEventListener('visibilitychange',function(){if(!document.hidden&&Date.now()-lastLoad>TTL)load()})}
 }
 function chkAdmin(id){
   /* 1) دالة is_admin() في القاعدة (لا تعتمد على صلاحيات جدول admins) 2) احتياطيًا: قراءة صفك من admins */
@@ -463,7 +471,7 @@ function gate(){
     if(!s){isAd=false;$('#mg').hidden=true;$('#lg').hidden=false;msg(L.mgH);mlist();return}
     $('#ar').hidden=false;
     return chkAdmin(s.user.id).then(function(x){
-      isAd=x.ok;$('#mg').hidden=!isAd;$('#ad').hidden=!isAd;
+      isAd=x.ok;$('#mg').hidden=!isAd;$('#ad').hidden=!isAd;if(isAd&&Date.now()-netAt>60000)load(true);
       msg(isAd?s.user.email:L.deny+(x.err?' ['+x.err+']':' (ID: '+s.user.id+')'));mlist();
     });
   }).catch(function(e){msg(String(e&&e.message||e))});
@@ -509,8 +517,9 @@ $('#fv').onclick=function(){
     if(img&&!/^https:\/\//.test(img))img='';
     var row={type:$('#fK').value,title:n,desc_ar:$('#fA').value.trim(),desc_en:$('#fB').value.trim(),status:$('#fS').value,available:$('#fAv').checked,url:$('#fU').value.trim(),cover:img,
       tags:$('#fG').value.split(/[,،]/).map(function(s){return s.trim()}).filter(Boolean),embed:$('#fM').checked,featured:$('#fF').checked};
-    return Promise.resolve(id?sb.from('projects').update(row).eq('id',id):sb.from('projects').insert(row)).then(function(r){
-      if(r.error)throw r.error;if(old&&old!==img)rmImg(old);fill(null);toast(L.saved);load()});
+    return Promise.resolve(id?sb.from('projects').update(row).eq('id',id).select(COLS):sb.from('projects').insert(row).select(COLS)).then(function(r){
+      if(r.error)throw r.error;if(old&&old!==img)rmImg(old);fill(null);toast(L.saved);
+      if(r.data&&r.data[0])putRow(r.data[0]);else load(true)});
   }).catch(fail).then(function(){b.disabled=false});
 };
 $('#fc').onclick=function(){fill(null)};
@@ -518,7 +527,7 @@ $('#ml').onclick=function(e){
   var a=e.target.closest('[data-e]'),d=e.target.closest('[data-d]');
   if(a)fill(list.find(function(x){return x.id===a.dataset.e}));
   if(d&&confirm(L.conf)){var p=list.find(function(x){return x.id===d.dataset.d});
-    sb.from('projects').delete().eq('id',d.dataset.d).then(function(r){if(r.error)return fail(r.error);rmImg(p&&p.img);toast(L.deleted);load()})}
+    sb.from('projects').delete().eq('id',d.dataset.d).then(function(r){if(r.error)return fail(r.error);rmImg(p&&p.img);toast(L.deleted);dropRow(d.dataset.d)})}
 };
 $('#im').onclick=function(){
   if(!sb||!isAd||imported||!confirm(L.conf))return;var b=this;b.disabled=true;
@@ -526,7 +535,7 @@ $('#im').onclick=function(){
     var s=p.img&&p.img.indexOf('data:')===0?fetch(p.img).then(function(r){return r.blob()}).then(up):Promise.resolve(p.img||'');
     var a=p.at||1,t=Date.now()-(a>=6?(100-a)*6e4:(20-a)*864e5);
     return s.then(function(img){return{type:p.type,title:p.t,desc_ar:p.d||'',desc_en:p.e||'',status:p.st||'live',available:true,url:p.url||'',cover:img,tags:p.tags||[],embed:!!p.embed,featured:!!p.feat,play:p.play||null,seed_id:p.id,created_at:new Date(t).toISOString()}})
-  })).then(function(rows){return sb.from('projects').insert(rows)}).then(function(r){if(r.error)throw r.error;toast(L.saved);load()}).catch(fail).then(function(){b.disabled=false});
+  })).then(function(rows){return sb.from('projects').insert(rows)}).then(function(r){if(r.error)throw r.error;toast(L.saved);load(true)}).catch(fail).then(function(){b.disabled=false});
 };
 $('#mg').onclick=function(){sd(true)};$('#sx').onclick=function(){sd(false)};
 // ===== ٩) تشغيل الأزرار =====
