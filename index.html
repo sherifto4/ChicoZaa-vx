@@ -196,6 +196,49 @@ header{background:rgba(5,5,6,.78);border-bottom:1px solid rgba(255,42,60,.18)}
   .h2{font-size:22px}.sec{padding-top:40px}
 }
 @media (hover:none){.card:hover{transform:none;box-shadow:none;border-color:var(--ln)}.card:hover .cv img,.card:hover .cv svg{transform:none}}
+
+/* ===== ChicoZaa design pass v2 — تعديلات إضافية فقط (احذف هذا الجزء للرجوع للتصميم السابق) ===== */
+@media (min-width:601px) and (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media (max-width:600px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .grid .cv{aspect-ratio:4/3}
+  .grid .bd{padding:9px 10px 10px;gap:3px}
+  .grid .bd h3{font-size:14.5px}
+  .grid .bd p{font-size:12px;min-height:2.9em}
+  .grid .ft{padding-top:6px}
+  .grid .ft small{display:none}
+  .grid .ft .btn.s{width:100%;min-height:40px;padding-inline:8px;font-size:13px}
+  .grid .tg{top:6px;inset-inline-start:6px}
+  .grid .tg span{font-size:10.5px;line-height:20px;padding:0 7px}
+  .grid .st{top:auto;bottom:6px;inset-inline-end:6px;font-size:10.5px;padding:0 8px;line-height:20px}
+}
+.card:focus-visible{outline:2px solid var(--red2);outline-offset:3px}
+
+/* ===== ChicoZaa home pass v3 — الأعمال المميزة + أحدث الإضافات + الفوتر (احذف الجزء للرجوع) ===== */
+#fs[data-n="1"]{grid-template-columns:minmax(0,640px)}
+#fs[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+#fs>.card:first-child .bd h3{font-size:18px}
+@media (min-width:1180px){
+  #fs[data-n="3"]>.card:first-child{grid-column:span 2}
+  #fs[data-n="5"]>.card:first-child{grid-column:span 2;grid-row:span 2}
+  #fs[data-n="3"]>.card:first-child .cv,#fs[data-n="5"]>.card:first-child .cv{aspect-ratio:auto;flex:1;min-height:150px}
+  #fs[data-n="3"]>.card:first-child .bd h3,#fs[data-n="5"]>.card:first-child .bd h3{font-size:22px}
+}
+@media (max-width:1179px){
+  #fs[data-n="3"]>.card:first-child,#fs[data-n="5"]>.card:first-child{grid-column:1/-1}
+  #fs[data-n="3"]>.card:first-child .cv,#fs[data-n="5"]>.card:first-child .cv{aspect-ratio:16/9}
+}
+@media (max-width:600px){#fs[data-n="2"]{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:601px) and (max-width:1000px){#rs>.card:nth-child(n+4){display:none}}
+footer{padding:36px 0 18px}
+footer .fx{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:26px 40px;align-items:start;justify-content:normal}
+footer .fb p{color:var(--mut);margin:12px 0 14px;max-width:46ch;font-size:14px;line-height:1.7}
+footer .fn h4{margin:0 0 12px;font:800 15px var(--ui);color:var(--fg)}
+footer #fl{display:flex;flex-direction:column;gap:2px}
+footer .fn a:not(.btn){color:var(--mut);font-size:14px;padding:6px 0;transition:color .2s}
+footer .fn a:not(.btn):hover{color:var(--red2)}
+footer .fbt{grid-column:1/-1;border-top:1px solid var(--ln);padding-top:16px;display:flex;flex-direction:column;gap:10px;align-items:center}
+@media (max-width:700px){footer .fx{grid-template-columns:1fr 1fr}footer .fb,footer .fn{grid-column:1/-1}footer #fl{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}}
 </style>
 <meta name="description" content="ChicoZaa-VX — منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي. العب، استكشف، وتابع أحدث الأعمال.">
 <link rel="canonical" href="https://sherifto4.github.io/ChicoZaa-vx/">
@@ -234,7 +277,10 @@ header{background:rgba(5,5,6,.78);border-bottom:1px solid rgba(255,42,60,.18)}
 <div class="w tiles" id="tiles"></div>
 
 <!-- ===== أعمال مميزة ===== -->
-<section class="sec w" id="feat"><h2 class="h2"><span data-i="featured"></span><em>FEATURED</em></h2><p class="sub" data-i="featSub"></p><div class="strip" id="fs"></div></section>
+<section class="sec w" id="feat"><h2 class="h2"><span data-i="featured"></span><em>FEATURED</em></h2><p class="sub" data-i="featSub"></p><div class="grid fgrid" id="fs"></div></section>
+
+<!-- ===== قسم "أضيف حديثًا" (القوالب الجديدة) — كارت Lumivane بيظهر هنا ===== -->
+<section class="sec w"><h2 class="h2"><span data-i="recent"></span><em>NEW DROPS</em></h2><div class="grid" id="rs"></div></section>
 
 <!-- ===== البحث وأزرار التصنيف ===== -->
 <div class="tools" id="work"><div class="w">
@@ -243,8 +289,6 @@ header{background:rgba(5,5,6,.78);border-bottom:1px solid rgba(255,42,60,.18)}
 </div></div>
 <!-- ===== كل المشاريع ===== -->
 <section class="sec w" style="padding-top:26px"><h2 class="h2"><span id="ttl"></span><em id="cnt"></em></h2><div class="grid" id="gr"></div></section>
-<!-- ===== قسم "أضيف حديثًا" (القوالب الجديدة) — كارت Lumivane بيظهر هنا ===== -->
-<section class="sec w"><h2 class="h2"><span data-i="recent"></span><em>NEW DROPS</em></h2><div class="strip" id="rs"></div></section>
 
 <!-- ===== عني ===== -->
 <section class="sec w" id="about"><div class="about">
@@ -262,7 +306,12 @@ header{background:rgba(5,5,6,.78);border-bottom:1px solid rgba(255,42,60,.18)}
 </div>
 
 <!-- ===== الفوتر ===== -->
-<footer><div class="w"><img class="logo-n" id="lf" alt="ChicoZAA"><span class="fc">© 2025 ChicoZAA. All Rights Reserved.</span><div class="soc" id="sc"></div><div class="tag">DREAM · CREATE · PLAY</div></div></footer>
+<footer><div class="w fx">
+  <div class="fb"><img class="logo-n" id="lf" alt="ChicoZAA"><p data-i="fAbout"></p><div class="soc" id="sc"></div></div>
+  <nav class="fn" aria-label="links"><h4 data-i="fLinks"></h4><div id="fl"></div></nav>
+  <div class="fn"><h4 data-i="contactT"></h4><a class="btn r s" href="#contact" data-i="contactBtn"></a></div>
+  <div class="fbt"><span class="fc">© 2025 ChicoZAA. All Rights Reserved.</span><div class="tag">DREAM · CREATE · PLAY</div></div>
+</div></footer>
 
 <!-- نافذة تفاصيل المشروع واللعبة -->
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="mw" id="mw"></div></div>
@@ -323,8 +372,8 @@ var SEED=[
 var NEW_RELEASES=[
 {id:'n1',type:'game',t:'Lumivane',d:'لعبة بازل نيون',e:'Neon puzzle game',tags:['puzzle','neon'],st:'live',url:'./lumivane/',img:'',at:99}
 ];
-var S={ar:{nav:['الرئيسية','الألعاب','التطبيقات','المشاريع','التصميمات','عني','تواصل'],all:'الكل',new:'جديد',intro:'مطوّر ألعاب ومصمم إبداعي.. أقدّم لكم عالمي الرقمي من ألعاب وتطبيقات ومشاريع مميزة بتصميم احترافي.',explore:'استكشف أعمالي',more:'تعرّف عليّ أكثر',featured:'أعمال مميزة',featSub:'بعض من أفضل مشاريعي التي أفتخر بها',recent:'أضيف حديثًا',search:'🔎 ابحث عن مشروع...',aboutT:'عني',a1:'أنا ChicoZAA: أبني ألعابًا وتطبيقات ومواقع وأصمّم هويات بصرية بروح الشارع والجرافيتي.',a2:'كل مشروع هنا يبدأ بحلم، يتحوّل إلى عمل، ثم يصبح تجربة تلعبها.',contactBtn:'تواصل معي',boxT:'استوديو مستقل يجمع الألعاب والتصميم والكود.',contactT:'تواصل',cSub:'اختر القناة الأنسب لك.',tileMore:'مشاهدة المزيد',tiles:[['الألعاب','ألعاب ممتعة ومميزة للجميع'],['التطبيقات','تطبيقات وأدوات مفيدة'],['المشاريع','مواقع وتجارب مبتكرة'],['التصميمات','أعمال تصميم احترافية']],types:{game:'لعبة',app:'تطبيق',project:'مشروع',design:'تصميم'},act:{game:'العب الآن',app:'تحميل',project:'فتح',design:'مشاهدة'},st:{live:'متاح',dev:'قيد التطوير',soon:'قريبًا'},empty:'لا توجد نتائج. جرّب كلمة أخرى أو صنّفًا آخر.',noUrl:'لم يُضف رابط لهذا المشروع بعد. أضفه من ⚙.',count:'مشروع',tabNote:'فتح في تبويب جديد',close:'إغلاق',mgT:'إدارة المشاريع',mgH:'تُحفظ التعديلات في متصفحك. انسخ JSON وضعه في SEED داخل الملف لتثبيتها للجميع.',fT:'الاسم',fC:'التصنيف',fD:'الوصف بالعربية',fE:'الوصف بالإنجليزية',fS:'الحالة',fU:'رابط المشروع',fI:'رابط صورة الغلاف',fG:'وسوم (مفصولة بفاصلة)',fM:'تشغيل داخل الصفحة (iframe)',fF:'مميز',save:'حفظ',clear:'مسح',exp:'نسخ JSON',reset:'استعادة الأمثلة',edit:'تعديل',del:'حذف',saved:'تم الحفظ',deleted:'تم الحذف',copied:'تم نسخ JSON',conf:'تأكيد؟',score:'النتيجة',over:'انتهت — اضغط للإعادة'},
-en:{nav:['Home','Games','Apps','Projects','Designs','About','Contact'],all:'All',new:'New',intro:'Game developer and creative designer. Welcome to my digital world of games, apps and standout projects with a professional touch.',explore:'Explore My Work',more:'Discover More',featured:'Featured Work',featSub:'Some of the projects I’m proud of',recent:'Recently Added',search:'🔎 Search projects...',aboutT:'About',a1:'I’m ChicoZAA. I build games, apps and websites, and design visual identities with a street-art spirit.',a2:'Every project here starts as a dream, becomes a build, then turns into something you can play.',contactBtn:'Contact me',boxT:'An independent studio blending games, design and code.',contactT:'Contact',cSub:'Pick the channel that suits you.',tileMore:'View more',tiles:[['Games','Fun, standout games for everyone'],['Apps','Useful apps and tools'],['Projects','Websites and experiments'],['Designs','Professional design work']],types:{game:'Game',app:'App',project:'Project',design:'Design'},act:{game:'Play now',app:'Download',project:'Open',design:'View'},st:{live:'Live',dev:'In development',soon:'Coming soon'},empty:'No results. Try another word or category.',noUrl:'No link added for this project yet. Add one from ⚙.',count:'projects',tabNote:'Open in new tab',close:'Close',mgT:'Manage projects',mgH:'Changes are saved in your browser. Copy the JSON into SEED in the file to publish them for everyone.',fT:'Title',fC:'Category',fD:'Arabic description',fE:'English description',fS:'Status',fU:'Project link',fI:'Cover image link',fG:'Tags (comma separated)',fM:'Run inside the page (iframe)',fF:'Featured',save:'Save',clear:'Clear',exp:'Copy JSON',reset:'Restore samples',edit:'Edit',del:'Delete',saved:'Saved',deleted:'Deleted',copied:'JSON copied',conf:'Confirm?',score:'Score',over:'Game over — tap to retry'}};
+var S={ar:{nav:['الرئيسية','الألعاب','التطبيقات','المشاريع','التصميمات','عني','تواصل'],all:'الكل',new:'جديد',intro:'مطوّر ألعاب ومصمم إبداعي.. أقدّم لكم عالمي الرقمي من ألعاب وتطبيقات ومشاريع مميزة بتصميم احترافي.',explore:'استكشف أعمالي',more:'تعرّف عليّ أكثر',featured:'أعمال مميزة',featSub:'بعض من أفضل مشاريعي التي أفتخر بها',recent:'أضيف حديثًا',search:'🔎 ابحث عن مشروع...',fAbout:'ChicoZAA معرض رقمي للألعاب والتطبيقات والمشاريع والتصميمات، بروح الشارع والجرافيتي.',fLinks:'روابط مهمة',aboutT:'عني',a1:'أنا ChicoZAA: أبني ألعابًا وتطبيقات ومواقع وأصمّم هويات بصرية بروح الشارع والجرافيتي.',a2:'كل مشروع هنا يبدأ بحلم، يتحوّل إلى عمل، ثم يصبح تجربة تلعبها.',contactBtn:'تواصل معي',boxT:'استوديو مستقل يجمع الألعاب والتصميم والكود.',contactT:'تواصل',cSub:'اختر القناة الأنسب لك.',tileMore:'مشاهدة المزيد',tiles:[['الألعاب','ألعاب ممتعة ومميزة للجميع'],['التطبيقات','تطبيقات وأدوات مفيدة'],['المشاريع','مواقع وتجارب مبتكرة'],['التصميمات','أعمال تصميم احترافية']],types:{game:'لعبة',app:'تطبيق',project:'مشروع',design:'تصميم'},act:{game:'العب الآن',app:'تحميل',project:'فتح',design:'مشاهدة'},st:{live:'متاح',dev:'قيد التطوير',soon:'قريبًا'},empty:'لا توجد نتائج. جرّب كلمة أخرى أو صنّفًا آخر.',noUrl:'لم يُضف رابط لهذا المشروع بعد. أضفه من ⚙.',count:'مشروع',tabNote:'فتح في تبويب جديد',close:'إغلاق',mgT:'إدارة المشاريع',mgH:'تُحفظ التعديلات في متصفحك. انسخ JSON وضعه في SEED داخل الملف لتثبيتها للجميع.',fT:'الاسم',fC:'التصنيف',fD:'الوصف بالعربية',fE:'الوصف بالإنجليزية',fS:'الحالة',fU:'رابط المشروع',fI:'رابط صورة الغلاف',fG:'وسوم (مفصولة بفاصلة)',fM:'تشغيل داخل الصفحة (iframe)',fF:'مميز',save:'حفظ',clear:'مسح',exp:'نسخ JSON',reset:'استعادة الأمثلة',edit:'تعديل',del:'حذف',saved:'تم الحفظ',deleted:'تم الحذف',copied:'تم نسخ JSON',conf:'تأكيد؟',score:'النتيجة',over:'انتهت — اضغط للإعادة'},
+en:{nav:['Home','Games','Apps','Projects','Designs','About','Contact'],all:'All',new:'New',intro:'Game developer and creative designer. Welcome to my digital world of games, apps and standout projects with a professional touch.',explore:'Explore My Work',more:'Discover More',featured:'Featured Work',featSub:'Some of the projects I’m proud of',recent:'Recently Added',search:'🔎 Search projects...',fAbout:'ChicoZAA is a digital showcase of games, apps, projects and designs with a street-art spirit.',fLinks:'Quick links',aboutT:'About',a1:'I’m ChicoZAA. I build games, apps and websites, and design visual identities with a street-art spirit.',a2:'Every project here starts as a dream, becomes a build, then turns into something you can play.',contactBtn:'Contact me',boxT:'An independent studio blending games, design and code.',contactT:'Contact',cSub:'Pick the channel that suits you.',tileMore:'View more',tiles:[['Games','Fun, standout games for everyone'],['Apps','Useful apps and tools'],['Projects','Websites and experiments'],['Designs','Professional design work']],types:{game:'Game',app:'App',project:'Project',design:'Design'},act:{game:'Play now',app:'Download',project:'Open',design:'View'},st:{live:'Live',dev:'In development',soon:'Coming soon'},empty:'No results. Try another word or category.',noUrl:'No link added for this project yet. Add one from ⚙.',count:'projects',tabNote:'Open in new tab',close:'Close',mgT:'Manage projects',mgH:'Changes are saved in your browser. Copy the JSON into SEED in the file to publish them for everyone.',fT:'Title',fC:'Category',fD:'Arabic description',fE:'English description',fS:'Status',fU:'Project link',fI:'Cover image link',fG:'Tags (comma separated)',fM:'Run inside the page (iframe)',fF:'Featured',save:'Save',clear:'Clear',exp:'Copy JSON',reset:'Restore samples',edit:'Edit',del:'Delete',saved:'Saved',deleted:'Deleted',copied:'JSON copied',conf:'Confirm?',score:'Score',over:'Game over — tap to retry'}};
 Object.assign(S.ar,{mgT:'لوحة الإدارة',mgH:'دخول المالك فقط.',em:'البريد الإلكتروني',pw:'كلمة المرور',login:'دخول',logout:'تسجيل خروج',imp:'استيراد المشاريع الحالية',fP:'صورة الغلاف (من الهاتف)',fI:'أو رابط صورة (https)',fV:'متاح',na:'غير متاح',noCfg:'أضف SB_URL و SB_KEY داخل الملف (راجع SETUP_AR.md).',deny:'هذا الحساب ليس مديرًا.',bad:'بيانات الدخول غير صحيحة',out:'تم تسجيل الخروج',fail:'تعذّر التنفيذ',badImg:'تعذّر قراءة الصورة',bi:'مدمج — استورده للتعديل'});
 Object.assign(S.en,{mgT:'Admin dashboard',mgH:'Owner access only.',em:'Email',pw:'Password',login:'Sign in',logout:'Sign out',imp:'Import current projects',fP:'Cover image (from phone)',fI:'or image link (https)',fV:'Available',na:'Unavailable',noCfg:'Set SB_URL and SB_KEY in the file (see SETUP_AR.md).',deny:'This account is not an admin.',bad:'Wrong email or password',out:'Signed out',fail:'Action failed',badImg:'Could not read the image',bi:'Built-in — import to edit'});
 // ===== ٥) دوال مساعدة وحفظ البيانات في المتصفح =====
@@ -368,8 +417,8 @@ function render(){
   $('#ttl').textContent=st.f==='all'?(lang==='en'?'All Projects':'كل المشاريع'):tl[st.f];$('#cnt').textContent=items.length+' '+L.count;
   $$('.pill').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.f===st.f)});
   $$('.links a,.dn a').forEach(function(a){a.classList.toggle('on',a.dataset.f===st.f&&st.f!=='all')});
-  var ft=list.filter(function(p){return p.feat});$('#fs').innerHTML=ft.map(card).join('');$('#feat').style.display=ft.length?'':'none';
-  $('#rs').innerHTML=NEW_RELEASES.concat(list.slice().sort(function(a,b){return b.at-a.at})).slice(0,5).map(card).join('');
+  var ft=list.filter(function(p){return p.feat});$('#fs').innerHTML=ft.map(card).join('');$('#fs').dataset.n=Math.min(ft.length,5);$('#feat').style.display=ft.length?'':'none';
+  $('#rs').innerHTML=NEW_RELEASES.concat(list.slice().sort(function(a,b){return b.at-a.at})).slice(0,4).map(card).join('');
   var hs=$('#hs'),n=function(k){return list.filter(function(p){return p.type===k}).length};
   if(hs)hs.innerHTML=TY.filter(n).map(function(k){return '<div><b>'+n(k)+'</b><span>'+L.types[k]+'</span></div>'}).join('');
   rv();
@@ -380,7 +429,7 @@ function chrome(){
   $$('[data-i]').forEach(function(e){var v=L[e.dataset.i];if(typeof v==='string')e.textContent=v});
   $$('[data-ph]').forEach(function(e){e.placeholder=L[e.dataset.ph]});
   var h=['#home','#work','#work','#work','#work','#about','#contact'];
-  var nav=L.nav.map(function(n,i){return '<a href="'+h[i]+'" data-f="'+NAVF[i]+'">'+n+'</a>'}).join('');$('#lk').innerHTML=nav;$('#dn').innerHTML=nav;
+  var nav=L.nav.map(function(n,i){return '<a href="'+h[i]+'" data-f="'+NAVF[i]+'">'+n+'</a>'}).join('');$('#lk').innerHTML=nav;$('#dn').innerHTML=nav;$('#fl').innerHTML=nav;
   $('#pl').innerHTML=[['all',L.all],['game',L.nav[1]],['app',L.nav[2]],['project',L.nav[3]],['design',L.nav[4]],['new',L.new]].map(function(f){return '<button class="pill" data-f="'+f[0]+'" aria-pressed="false">'+f[1]+'</button>'}).join('');
   var ti=[IMG.t_ctrl,IMG.t_phone,IMG.t_lap,IMG.t_mask];
   $('#tiles').innerHTML=L.tiles.map(function(t,i){return '<a class="tile" href="#work" data-f="'+TY[i]+'"><h3>'+t[0]+'</h3><p>'+t[1]+'</p><small>'+L.tileMore+' '+(lang==='ar'?'←':'→')+'</small><img loading="lazy" decoding="async" alt="" src="'+ti[i]+'"></a>'}).join('');
