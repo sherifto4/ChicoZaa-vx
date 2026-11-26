@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ChicoZaa-VX | شيكوزا - ڤي إكس</title>
 <meta name="color-scheme" content="dark">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://qzqpfllqpsyxqjzprhnf.supabase.co" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 /* ===== ١) الألوان والمتغيرات الأساسية — لو مش عايز تغيّر الشكل متلمسهاش ===== */
@@ -137,7 +137,73 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
 .dn.on{display:flex;flex-direction:column;position:fixed;top:calc(66px + env(safe-area-inset-top,0px));inset-inline:0;background:var(--sf);z-index:49;padding:8px 16px 14px;border-bottom:1px solid var(--ln)}.dn a{padding:12px 6px;border-bottom:1px solid var(--ln);font-weight:700}
 .char{width:85%;opacity:.55}.about{grid-template-columns:1fr}}
 @media (max-width:600px){.grid{grid-template-columns:1fr}.hero{min-height:620px}.hero .w{padding-bottom:120px}.tile p{max-width:100%}.tile{min-height:140px}.tiles{gap:10px}.cts{grid-template-columns:1fr}.char{width:100%;opacity:.45}}
+/* ===== ١١) تحسينات الواجهة V3 — تصميم فقط، لا تمس قاعدة البيانات ولا لوحة الإدارة ===== */
+html,body{max-width:100%;overflow-x:clip}img{height:auto}a,button{-webkit-tap-highlight-color:transparent}
+header{background:rgba(5,5,6,.78);border-bottom:1px solid rgba(255,42,60,.18)}
+.btn{border-radius:12px;min-height:46px}.btn.s{min-height:44px}.btn:active{transform:scale(.97)}
+.btn.r{background:linear-gradient(135deg,#a80a19,var(--red2));box-shadow:0 6px 22px -6px rgba(255,42,60,.6)}
+.btn[disabled],.btn.off{background:#18181c;border-color:var(--ln);color:var(--dim);box-shadow:none;cursor:not-allowed;transform:none}
+.logo-h{animation:none;filter:none}
+.hero .w{padding-bottom:150px}
+.hstats{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;direction:rtl}html[dir=ltr] .hstats{direction:ltr}
+.hstats div{min-width:84px;padding:8px 16px;border:1px solid var(--ln);border-radius:12px;background:rgba(13,13,16,.7);backdrop-filter:blur(8px);text-align:center;line-height:1.3}
+.hstats b{display:block;font:900 24px var(--ui);color:var(--red2)}.hstats span{font-size:13px;color:var(--mut)}
+.tile{border-radius:16px}.tile:hover{transform:translateY(-4px)}
+.sec{padding-top:64px}.h2{font-size:clamp(22px,3vw,30px)}
+.h2::before{content:"";width:4px;height:1.1em;border-radius:3px;background:var(--red2);box-shadow:var(--glow)}
+.tools{background:rgba(5,5,6,.85)}.srch input{min-height:50px;font-size:16px;background:rgba(13,13,16,.9)}.pill{min-height:40px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:22px}
+.card{border-radius:18px;background:linear-gradient(180deg,#101014,#0b0b0e);height:100%}
+.card:active{transform:scale(.985)}
+.cv{aspect-ratio:16/9}.bd{padding:14px 16px 16px;gap:6px}
+.bd h3{font-size:19px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.1em;line-height:1.55;flex:none}
+.st{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:2px 11px}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.ft{margin-top:auto;padding-top:10px}.ft .btn.s{padding-inline:18px}
+.strip .card{width:min(320px,82vw);height:auto}
+@media (max-width:600px){.hero{min-height:600px}.hstats{gap:8px}.hstats div{flex:1 1 0;min-width:0;padding:8px 4px}.tiles{margin-top:-70px}.sec{padding-top:48px}}
+
+/* ===== ١٢) تحديث V4 — تصميم وأداء فقط (لا يمس البيانات ولا Supabase ولا لوحة الإدارة) ===== */
+.w{width:min(1240px,100% - 32px)}
+.hero{min-height:min(720px,88vh)}
+.sec{padding-top:52px}
+.tile{min-height:132px}
+.grid{grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.card{border-radius:16px}
+.card.rv{transition:opacity .5s,translate .5s,transform .3s,border-color .3s,box-shadow .3s}
+.grid .card.rv:nth-child(3n+2){transition-delay:.05s,.05s,0s,0s,0s}.grid .card.rv:nth-child(3n){transition-delay:.1s,.1s,0s,0s,0s}
+.cv{aspect-ratio:16/9;background:#09090b}
+.tg{top:8px;inset-inline-start:8px}.tg span{font-size:11.5px;line-height:22px;padding:0 9px}
+.st{top:8px;inset-inline-end:8px;font-size:11.5px;padding:1px 10px}
+.bd{padding:12px 14px 14px;gap:4px}
+.bd h3{font-size:17px;transition:color .25s}
+.card:hover .bd h3{color:var(--red2)}
+.bd p{font-size:13.5px;line-height:1.5;min-height:3em}
+.ft{padding-top:8px;gap:8px}.ft small{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ft .btn.s{min-height:40px;padding-inline:16px;font-size:13.5px;flex:none}
+.ft .btn.r:hover{transform:translateY(-1px)}
+.strip{gap:14px}.strip .card{width:min(280px,78vw)}
+.tools .w{gap:8px}.srch input{min-height:48px}
+@media (min-width:1180px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.hero{min-height:640px}}
+@media (max-width:600px){
+  .grid{grid-template-columns:1fr;gap:12px}
+  .hero{min-height:560px}.hero .w{padding-bottom:130px}
+  .cv{aspect-ratio:16/8.5}
+  .bd{padding:10px 12px 12px}.bd h3{font-size:16.5px}.bd p{min-height:2.9em}
+  .ft .btn.s{min-height:44px}
+  .h2{font-size:22px}.sec{padding-top:40px}
+}
+@media (hover:none){.card:hover{transform:none;box-shadow:none;border-color:var(--ln)}.card:hover .cv img,.card:hover .cv svg{transform:none}}
 </style>
+<meta name="description" content="ChicoZaa-VX — منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي. العب، استكشف، وتابع أحدث الأعمال.">
+<link rel="canonical" href="https://sherifto4.github.io/ChicoZaa-vx/">
+<meta name="theme-color" content="#050506"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050506'/%3E%3Cpath d='M44 20a16 16 0 1 0 0 24' fill='none' stroke='%23ff2a3c' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website"><meta property="og:site_name" content="ChicoZaa-VX"><meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="ChicoZaa-VX | شيكوزا - ڤي إكس"><meta property="og:description" content="منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي.">
+<meta property="og:url" content="https://sherifto4.github.io/ChicoZaa-vx/"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="ChicoZaa-VX | شيكوزا - ڤي إكس"><meta name="twitter:description" content="منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ChicoZaa-VX","alternateName":"شيكوزا ڤي إكس","url":"https://sherifto4.github.io/ChicoZaa-vx/","inLanguage":["ar","en"],"description":"منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي."}</script>
 </head>
 <body>
 <!-- خلفية الجزيئات الحمراء -->
@@ -161,6 +227,7 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
     <img class="logo-h" id="lh" alt="ChicoZAA — Dream Create Play">
     <p class="intro" data-i="intro"></p>
     <div class="cta"><a class="btn r" href="#work" data-go="all" data-i="explore"></a><a class="btn" href="#about" data-i="more"></a></div>
+    <div class="hstats" id="hs"></div>
   </div></div>
 </section>
 <!-- كروت التصنيفات (ألعاب / تطبيقات / مشاريع / تصميمات) -->
@@ -226,7 +293,7 @@ html[dir=ltr] .side{translate:-100% 0}.side.on{translate:0 0;visibility:visible}
 </aside>
 <div class="toast" id="ts" role="status"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded',function(){'use strict';
 // الصور المدمجة (اللوجو والكروت) موجودة في آخر الملف
@@ -269,13 +336,13 @@ var NAVF=['all','game','app','project','design','about','contact'];
 // ===== ٦) رسم الغلاف والكارت وفلترة البحث =====
 /* cover */
 function cov(p){
-  if(p.img&&(p.img.indexOf('data:image/')===0||/^https:\/\//.test(p.img)))return '<img loading="lazy" decoding="async" alt="" src="'+esc(p.img)+'">';
+  if(p.img&&(p.img.indexOf('data:image/')===0||/^https:\/\//.test(p.img)))return '<img loading="lazy" decoding="async" alt="'+esc(p.t)+'" src="'+esc(p.img)+'">';
   return '<svg viewBox="0 0 320 152" preserveAspectRatio="xMidYMid slice"><rect width="320" height="152" fill="#0b0b0e"/><circle cx="230" cy="40" r="90" fill="#d90f23" opacity=".28"/><path d="M0 120 L60 70 L110 100 L180 40 L250 95 L320 60 V152 H0Z" fill="#1a0509"/><path d="M118 96 L124 70 L140 84 L160 58 L180 84 L196 70 L202 96Z" fill="none" stroke="#f4f4f6" stroke-width="4" stroke-linejoin="round" opacity=".85"/></svg>';
 }
 function desc(p){return lang==='en'?(p.e||p.d):(p.d||p.e)}
 function card(p){
-  var isNew=isN(p);
-  return '<article class="card rv" tabindex="0" role="button" data-id="'+esc(p.id)+'"><div class="cv">'+cov(p)+'<div class="tg"><span>'+L.types[p.type]+'</span>'+(isNew?'<span style="background:var(--red);border-color:transparent">'+L.new+'</span>':'')+'</div><span class="st '+stc(p)+'">'+stl(p)+'</span></div><div class="bd"><h3>'+esc(p.t)+'</h3><p>'+esc(desc(p))+'</p><div class="ft"><small>'+(p.tags||[]).slice(0,2).map(function(x){return '#'+esc(x)}).join(' ')+'</small><button class="btn r s" data-act="'+esc(p.id)+'">'+L.act[p.type]+'</button></div></div></article>';
+  var off=p.av===false;
+  return '<article class="card rv" tabindex="0" role="button" data-id="'+esc(p.id)+'"><div class="cv">'+cov(p)+'<div class="tg"><span>'+L.types[p.type]+'</span>'+(isN(p)?'<span style="background:var(--red);border-color:transparent">'+L.new+'</span>':'')+'</div><span class="st '+stc(p)+'">'+stl(p)+'</span></div><div class="bd"><h3>'+esc(p.t)+'</h3><p>'+esc(desc(p))+'</p><div class="ft"><small>'+(p.tags||[]).slice(0,2).map(function(x){return '#'+esc(x)}).join(' ')+'</small><button class="btn s '+(off?'off':'r')+'" data-act="'+esc(p.id)+'"'+(off?' aria-disabled="true"':'')+'>'+(off?L.na:L.act[p.type])+'</button></div></div></article>';
 }
 function nz(s){return String(s||'').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
 function ok(p){
@@ -287,7 +354,6 @@ function ok(p){
 var EMPTY='<svg viewBox="0 0 90 70"><path d="M14 56 L20 22 L36 38 L45 12 L54 38 L70 22 L76 56Z" fill="none" stroke="#d90f23" stroke-width="4" stroke-linejoin="round"/><path d="M30 64 L60 64" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/><path d="M38 30 l14 14 m0-14 l-14 14" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/></svg>';
 var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.05}):null;
 function rv(){$$('.rv:not(.in)').forEach(function(el){io?io.observe(el):el.classList.add('in')})}
-var FL=function(){return [['all',L.all],['game',L.types.game+'s'===0?'':L.nav[1]],['app',L.nav[2]],['project',L.nav[3]],['design',L.nav[4]],['new',L.new]]};
 // عرض الكروت في كل الأقسام
 function render(){
   var items=list.filter(ok);
@@ -298,6 +364,8 @@ function render(){
   $$('.links a,.dn a').forEach(function(a){a.classList.toggle('on',a.dataset.f===st.f&&st.f!=='all')});
   var ft=list.filter(function(p){return p.feat});$('#fs').innerHTML=ft.map(card).join('');$('#feat').style.display=ft.length?'':'none';
   $('#rs').innerHTML=NEW_RELEASES.concat(list.slice().sort(function(a,b){return b.at-a.at})).slice(0,5).map(card).join('');
+  var hs=$('#hs'),n=function(k){return list.filter(function(p){return p.type===k}).length};
+  if(hs)hs.innerHTML=TY.filter(n).map(function(k){return '<div><b>'+n(k)+'</b><span>'+L.types[k]+'</span></div>'}).join('');
   rv();
 }
 // ترجمة الصفحة وبناء القوائم والأزرار
@@ -309,7 +377,7 @@ function chrome(){
   var nav=L.nav.map(function(n,i){return '<a href="'+h[i]+'" data-f="'+NAVF[i]+'">'+n+'</a>'}).join('');$('#lk').innerHTML=nav;$('#dn').innerHTML=nav;
   $('#pl').innerHTML=[['all',L.all],['game',L.nav[1]],['app',L.nav[2]],['project',L.nav[3]],['design',L.nav[4]],['new',L.new]].map(function(f){return '<button class="pill" data-f="'+f[0]+'" aria-pressed="false">'+f[1]+'</button>'}).join('');
   var ti=[IMG.t_ctrl,IMG.t_phone,IMG.t_lap,IMG.t_mask];
-  $('#tiles').innerHTML=L.tiles.map(function(t,i){return '<a class="tile" href="#work" data-f="'+TY[i]+'"><h3>'+t[0]+'</h3><p>'+t[1]+'</p><small>'+L.tileMore+' '+(lang==='ar'?'←':'→')+'</small><img alt="" src="'+ti[i]+'"></a>'}).join('');
+  $('#tiles').innerHTML=L.tiles.map(function(t,i){return '<a class="tile" href="#work" data-f="'+TY[i]+'"><h3>'+t[0]+'</h3><p>'+t[1]+'</p><small>'+L.tileMore+' '+(lang==='ar'?'←':'→')+'</small><img loading="lazy" decoding="async" alt="" src="'+ti[i]+'"></a>'}).join('');
   $('#cts').innerHTML=SOCIAL.map(function(s){return '<a class="ct" target="_blank" rel="noopener noreferrer" href="'+s[1]+'"><svg viewBox="0 0 24 24"><path d="'+s[2]+'"/></svg>'+s[0]+'</a>'}).join('');
   $('#sc').innerHTML=SOCIAL.map(function(s){return '<a target="_blank" rel="noopener noreferrer" href="'+s[1]+'" aria-label="'+s[0]+'"><svg viewBox="0 0 24 24"><path d="'+s[2]+'"/></svg></a>'}).join('');
   $('#fK').innerHTML=TY.map(function(t){return '<option value="'+t+'">'+L.types[t]+'</option>'}).join('');
@@ -322,11 +390,11 @@ var last=null,raf=0;
 function openM(id){
   var p=findP(id);if(!p)return;last=document.activeElement;
   var safe=/^(https:\/\/|\.\/)/.test(p.url||'');
-  var top=p.play==='dodge'?'<canvas id="gm" width="320" height="380"></canvas>':(p.embed&&safe&&p.av!==false?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>':'<div class="cv" style="aspect-ratio:16/8">'+cov(p)+'</div>');
-  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><span class="st '+stc(p)+'" style="position:static;display:inline-block">'+stl(p)+'</span> <span style="color:var(--mut)">'+L.types[p.type]+'</span><h2>'+esc(p.t)+'</h2><p style="color:var(--mut);margin:0">'+esc(desc(p))+'</p><div class="chips">'+(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('')+'</div><div class="row">'+(p.play==='dodge'?'':'<button class="btn r" id="go"'+(p.av===false?' disabled':'')+'>'+L.act[p.type]+'</button>')+(p.embed&&safe?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
+  var top=p.play==='dodge'&&p.av!==false?'<canvas id="gm" width="320" height="380"></canvas>':(p.embed&&safe&&p.av!==false?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>':'<div class="cv" style="aspect-ratio:16/8">'+cov(p)+'</div>');
+  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><span class="st '+stc(p)+'" style="position:static;display:inline-block">'+stl(p)+'</span> <span style="color:var(--mut)">'+L.types[p.type]+'</span><h2>'+esc(p.t)+'</h2><p style="color:var(--mut);margin:0">'+esc(desc(p))+'</p><div class="chips">'+(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('')+'</div><div class="row">'+(p.play==='dodge'&&p.av!==false?'':'<button class="btn r" id="go"'+(p.av===false?' disabled':'')+'>'+L.act[p.type]+'</button>')+(p.embed&&safe?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
   $('#ov').classList.add('on');$('#mx').onclick=$('#mc').onclick=closeM;$('#mx').focus();
   var g=$('#go');if(g)g.onclick=function(){if(safe)window.open(p.url,'_blank','noopener,noreferrer');else toast(L.noUrl)};
-  if(p.play==='dodge')dodge($('#gm'));
+  if(p.play==='dodge'&&p.av!==false)dodge($('#gm'));
 }
 function closeM(){cancelAnimationFrame(raf);$('#mw').innerHTML='';$('#ov').classList.remove('on');if(last&&last.focus)last.focus()}
 function dodge(c){
@@ -474,7 +542,6 @@ $('#bg').onclick=function(){var o=$('#dn').classList.toggle('on');this.setAttrib
 var qt;$('#q').oninput=function(){var v=this.value;$('#qc').hidden=!v;clearTimeout(qt);qt=setTimeout(function(){st.q=v;render()},60)};
 $('#qc').onclick=function(){$('#q').value='';this.hidden=true;st.q='';render();$('#q').focus()};
 $('#lang').onclick=function(){lang=lang==='ar'?'en':'ar';sv(LK,lang);chrome()};
-$('#fs').parentNode.addEventListener('click',function(){});
 // ===== ١٠) حركة الجزيئات الحمراء =====
 /* particles */
 (function(){
