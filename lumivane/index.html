@@ -780,7 +780,17 @@ function setRewardBusy(b){rewardBusy=b;document.querySelectorAll('.reward-mini')
 function nudgeReward(){document.querySelectorAll('.reward-mini').forEach(x=>{x.classList.remove('pulse');void x.offsetWidth;x.classList.add('pulse')})}
 /* Plug the platform's rewarded-ad call in here: return 'rewarded' only after the ad was fully watched, 'skipped' if closed early.
    Alternatively let the platform call window.onRewardedAdCompleted() when the ad finishes. */
-async function showRewardedAd(){return 'unavailable'}
+async function showRewardedAd(){
+  const adUrl = 'https://hai8g.com/4/12357866';
+  const win = window.open(adUrl, '_blank', 'noopener,noreferrer');
+  if(!win){
+    location.href = adUrl;
+    return 'unavailable';
+  }
+  await new Promise(r => setTimeout(r, 4000));
+  return 'rewarded';
+}
+
 window.onRewardedAdCompleted=()=>{const g=grantRewardHints(REWARD_HINTS);if(g>0)toast(L('gotHints',{n:g}))};
 async function watchRewardAd(){
   if(rewardBusy)return;
