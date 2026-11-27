@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sherifto4.github.io/ChicoZaa-vx/sitemap.xml
