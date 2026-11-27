@@ -239,6 +239,49 @@ footer .fn a:not(.btn){color:var(--mut);font-size:14px;padding:6px 0;transition:
 footer .fn a:not(.btn):hover{color:var(--red2)}
 footer .fbt{grid-column:1/-1;border-top:1px solid var(--ln);padding-top:16px;display:flex;flex-direction:column;gap:10px;align-items:center}
 @media (max-width:700px){footer .fx{grid-template-columns:1fr 1fr}footer .fb,footer .fn{grid-column:1/-1}footer #fl{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}}
+
+/* fix: اتجاه عناوين البطاقات يتبع لغة العنوان نفسه (القص من النهاية للإنجليزي) */
+.card h3{unicode-bidi:plaintext}
+
+/* ===== ChicoZaa search pass v5 — حركة خفيفة + ثبات التخطيط + زر مسح أوضح (احذف الجزء للرجوع) ===== */
+@keyframes czIn{from{opacity:0;transform:translateY(6px)}}
+#gr.sr{min-height:min(60vh,480px)}
+#gr.sr .card.rv{opacity:1;translate:none;transition-delay:0s}
+#gr.sr .card{animation:czIn .22s ease backwards}
+@media (max-width:600px){.qc{width:40px;height:40px;font-size:16px}}
+@media (prefers-reduced-motion:reduce){#gr.sr .card{animation:none}}
+
+/* ===== ChicoZaa modal pass v6 — نافذة التفاصيل + المعرض + التكبير (احذف الجزء للرجوع) ===== */
+html.mo{overflow:hidden}
+.mw{width:min(860px,100%);max-height:94vh;overscroll-behavior:contain}
+.mw .m-cover{aspect-ratio:16/9;max-height:50vh;width:100%}
+.m-gal{background:#050506;position:relative}
+.m-gal::before,.m-gal::after{pointer-events:none}
+.m-gal .gz{position:relative;z-index:1;display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.m-gal img{width:100%;height:100%;object-fit:contain}
+.gn{z-index:2;position:absolute;top:50%;translate:0 -50%;width:42px;height:42px;border-radius:50%;border:1px solid var(--ln);background:rgba(0,0,0,.7);color:var(--fg);font-size:26px;line-height:1;cursor:pointer}
+.gn.pv{inset-inline-start:10px}.gn.nx{inset-inline-end:10px}
+.gc{z-index:2;position:absolute;bottom:8px;inset-inline-start:10px;padding:0 10px;border-radius:99px;background:rgba(0,0,0,.7);font-size:12px;line-height:24px;color:var(--mut)}
+.gd{display:flex;gap:8px;overflow-x:auto;padding:10px 22px 0;scrollbar-width:thin}
+.gd button{flex:none;min-width:36px;height:32px;border-radius:8px;border:1px solid var(--ln);background:#111115;color:var(--mut);cursor:pointer}
+.gd button[aria-current=true]{border-color:var(--red2);color:var(--fg);background:#1a0b0e}
+.m-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.m-type{border:1px solid var(--ln);border-radius:99px;padding:0 12px;line-height:26px;font-size:13px;color:var(--mut)}
+.m-new{background:var(--red);border-color:transparent;color:#fff}
+.mw h2{font-size:clamp(22px,5vw,30px);line-height:1.3;margin:12px 0 8px;overflow-wrap:anywhere}
+.m-desc{margin:0;color:var(--mut);line-height:1.85;white-space:pre-line;overflow-wrap:anywhere}
+.m-note{margin:12px 0 0;padding:10px 12px;border:1px dashed var(--ln);border-radius:10px;color:var(--dim);font-size:14px}
+.mw .row{margin-top:18px}
+.lb{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.94);cursor:zoom-out}
+.lb img{max-width:96vw;max-height:92vh;object-fit:contain}
+.lbx{position:absolute;top:12px;inset-inline-end:12px;width:44px;height:44px;border-radius:50%;border:1px solid var(--ln);background:rgba(0,0,0,.8);color:var(--fg);cursor:pointer}
+@media (max-width:600px){
+  .ov{padding:8px}.mw{max-height:96vh}
+  .mw .in{padding:14px 16px 20px}
+  .mw .row .btn.r,.mw .row .btn.off{flex:1 1 100%}
+  .gd{padding-inline:16px}
+}
+@media (prefers-reduced-motion:reduce){.mw,.ov.on{animation:none}}
 </style>
 <meta name="description" content="ChicoZaa-VX — منصة ألعاب وتطبيقات ومشاريع مستقلة بتصميم احترافي. العب، استكشف، وتابع أحدث الأعمال.">
 <link rel="canonical" href="https://sherifto4.github.io/ChicoZaa-vx/">
@@ -288,7 +331,7 @@ footer .fbt{grid-column:1/-1;border-top:1px solid var(--ln);padding-top:16px;dis
   <div class="pills" id="pl" role="group"></div>
 </div></div>
 <!-- ===== كل المشاريع ===== -->
-<section class="sec w" style="padding-top:26px"><h2 class="h2"><span id="ttl"></span><em id="cnt"></em></h2><div class="grid" id="gr"></div></section>
+<section class="sec w" style="padding-top:26px"><h2 class="h2"><span id="ttl"></span><em id="cnt" aria-live="polite"></em></h2><div class="grid" id="gr"></div></section>
 
 <!-- ===== عني ===== -->
 <section class="sec w" id="about"><div class="about">
@@ -372,8 +415,8 @@ var SEED=[
 var NEW_RELEASES=[
 {id:'n1',type:'game',t:'Lumivane',d:'لعبة بازل نيون',e:'Neon puzzle game',tags:['puzzle','neon'],st:'live',url:'./lumivane/',img:'',at:99}
 ];
-var S={ar:{nav:['الرئيسية','الألعاب','التطبيقات','المشاريع','التصميمات','عني','تواصل'],all:'الكل',new:'جديد',intro:'مطوّر ألعاب ومصمم إبداعي.. أقدّم لكم عالمي الرقمي من ألعاب وتطبيقات ومشاريع مميزة بتصميم احترافي.',explore:'استكشف أعمالي',more:'تعرّف عليّ أكثر',featured:'أعمال مميزة',featSub:'بعض من أفضل مشاريعي التي أفتخر بها',recent:'أضيف حديثًا',search:'🔎 ابحث عن مشروع...',fAbout:'ChicoZAA معرض رقمي للألعاب والتطبيقات والمشاريع والتصميمات، بروح الشارع والجرافيتي.',fLinks:'روابط مهمة',aboutT:'عني',a1:'أنا ChicoZAA: أبني ألعابًا وتطبيقات ومواقع وأصمّم هويات بصرية بروح الشارع والجرافيتي.',a2:'كل مشروع هنا يبدأ بحلم، يتحوّل إلى عمل، ثم يصبح تجربة تلعبها.',contactBtn:'تواصل معي',boxT:'استوديو مستقل يجمع الألعاب والتصميم والكود.',contactT:'تواصل',cSub:'اختر القناة الأنسب لك.',tileMore:'مشاهدة المزيد',tiles:[['الألعاب','ألعاب ممتعة ومميزة للجميع'],['التطبيقات','تطبيقات وأدوات مفيدة'],['المشاريع','مواقع وتجارب مبتكرة'],['التصميمات','أعمال تصميم احترافية']],types:{game:'لعبة',app:'تطبيق',project:'مشروع',design:'تصميم'},act:{game:'العب الآن',app:'تحميل',project:'فتح',design:'مشاهدة'},st:{live:'متاح',dev:'قيد التطوير',soon:'قريبًا'},empty:'لا توجد نتائج. جرّب كلمة أخرى أو صنّفًا آخر.',noUrl:'لم يُضف رابط لهذا المشروع بعد. أضفه من ⚙.',count:'مشروع',tabNote:'فتح في تبويب جديد',close:'إغلاق',mgT:'إدارة المشاريع',mgH:'تُحفظ التعديلات في متصفحك. انسخ JSON وضعه في SEED داخل الملف لتثبيتها للجميع.',fT:'الاسم',fC:'التصنيف',fD:'الوصف بالعربية',fE:'الوصف بالإنجليزية',fS:'الحالة',fU:'رابط المشروع',fI:'رابط صورة الغلاف',fG:'وسوم (مفصولة بفاصلة)',fM:'تشغيل داخل الصفحة (iframe)',fF:'مميز',save:'حفظ',clear:'مسح',exp:'نسخ JSON',reset:'استعادة الأمثلة',edit:'تعديل',del:'حذف',saved:'تم الحفظ',deleted:'تم الحذف',copied:'تم نسخ JSON',conf:'تأكيد؟',score:'النتيجة',over:'انتهت — اضغط للإعادة'},
-en:{nav:['Home','Games','Apps','Projects','Designs','About','Contact'],all:'All',new:'New',intro:'Game developer and creative designer. Welcome to my digital world of games, apps and standout projects with a professional touch.',explore:'Explore My Work',more:'Discover More',featured:'Featured Work',featSub:'Some of the projects I’m proud of',recent:'Recently Added',search:'🔎 Search projects...',fAbout:'ChicoZAA is a digital showcase of games, apps, projects and designs with a street-art spirit.',fLinks:'Quick links',aboutT:'About',a1:'I’m ChicoZAA. I build games, apps and websites, and design visual identities with a street-art spirit.',a2:'Every project here starts as a dream, becomes a build, then turns into something you can play.',contactBtn:'Contact me',boxT:'An independent studio blending games, design and code.',contactT:'Contact',cSub:'Pick the channel that suits you.',tileMore:'View more',tiles:[['Games','Fun, standout games for everyone'],['Apps','Useful apps and tools'],['Projects','Websites and experiments'],['Designs','Professional design work']],types:{game:'Game',app:'App',project:'Project',design:'Design'},act:{game:'Play now',app:'Download',project:'Open',design:'View'},st:{live:'Live',dev:'In development',soon:'Coming soon'},empty:'No results. Try another word or category.',noUrl:'No link added for this project yet. Add one from ⚙.',count:'projects',tabNote:'Open in new tab',close:'Close',mgT:'Manage projects',mgH:'Changes are saved in your browser. Copy the JSON into SEED in the file to publish them for everyone.',fT:'Title',fC:'Category',fD:'Arabic description',fE:'English description',fS:'Status',fU:'Project link',fI:'Cover image link',fG:'Tags (comma separated)',fM:'Run inside the page (iframe)',fF:'Featured',save:'Save',clear:'Clear',exp:'Copy JSON',reset:'Restore samples',edit:'Edit',del:'Delete',saved:'Saved',deleted:'Deleted',copied:'JSON copied',conf:'Confirm?',score:'Score',over:'Game over — tap to retry'}};
+var S={ar:{nav:['الرئيسية','الألعاب','التطبيقات','المشاريع','التصميمات','عني','تواصل'],all:'الكل',new:'جديد',intro:'مطوّر ألعاب ومصمم إبداعي.. أقدّم لكم عالمي الرقمي من ألعاب وتطبيقات ومشاريع مميزة بتصميم احترافي.',explore:'استكشف أعمالي',more:'تعرّف عليّ أكثر',featured:'أعمال مميزة',featSub:'بعض من أفضل مشاريعي التي أفتخر بها',recent:'أضيف حديثًا',search:'🔎 ابحث عن مشروع...',fAbout:'ChicoZAA معرض رقمي للألعاب والتطبيقات والمشاريع والتصميمات، بروح الشارع والجرافيتي.',fLinks:'روابط مهمة',unav:'هذا المشروع غير متاح حاليًا.',gz:'تكبير الصورة',gp:'السابقة',gnx:'التالية',aboutT:'عني',a1:'أنا ChicoZAA: أبني ألعابًا وتطبيقات ومواقع وأصمّم هويات بصرية بروح الشارع والجرافيتي.',a2:'كل مشروع هنا يبدأ بحلم، يتحوّل إلى عمل، ثم يصبح تجربة تلعبها.',contactBtn:'تواصل معي',boxT:'استوديو مستقل يجمع الألعاب والتصميم والكود.',contactT:'تواصل',cSub:'اختر القناة الأنسب لك.',tileMore:'مشاهدة المزيد',tiles:[['الألعاب','ألعاب ممتعة ومميزة للجميع'],['التطبيقات','تطبيقات وأدوات مفيدة'],['المشاريع','مواقع وتجارب مبتكرة'],['التصميمات','أعمال تصميم احترافية']],types:{game:'لعبة',app:'تطبيق',project:'مشروع',design:'تصميم'},act:{game:'العب الآن',app:'تحميل',project:'فتح',design:'مشاهدة'},st:{live:'متاح',dev:'قيد التطوير',soon:'قريبًا'},empty:'لا توجد نتائج. جرّب كلمة أخرى أو صنّفًا آخر.',noUrl:'لم يُضف رابط لهذا المشروع بعد. أضفه من ⚙.',count:'مشروع',tabNote:'فتح في تبويب جديد',close:'إغلاق',mgT:'إدارة المشاريع',mgH:'تُحفظ التعديلات في متصفحك. انسخ JSON وضعه في SEED داخل الملف لتثبيتها للجميع.',fT:'الاسم',fC:'التصنيف',fD:'الوصف بالعربية',fE:'الوصف بالإنجليزية',fS:'الحالة',fU:'رابط المشروع',fI:'رابط صورة الغلاف',fG:'وسوم (مفصولة بفاصلة)',fM:'تشغيل داخل الصفحة (iframe)',fF:'مميز',save:'حفظ',clear:'مسح',exp:'نسخ JSON',reset:'استعادة الأمثلة',edit:'تعديل',del:'حذف',saved:'تم الحفظ',deleted:'تم الحذف',copied:'تم نسخ JSON',conf:'تأكيد؟',score:'النتيجة',over:'انتهت — اضغط للإعادة'},
+en:{nav:['Home','Games','Apps','Projects','Designs','About','Contact'],all:'All',new:'New',intro:'Game developer and creative designer. Welcome to my digital world of games, apps and standout projects with a professional touch.',explore:'Explore My Work',more:'Discover More',featured:'Featured Work',featSub:'Some of the projects I’m proud of',recent:'Recently Added',search:'🔎 Search projects...',fAbout:'ChicoZAA is a digital showcase of games, apps, projects and designs with a street-art spirit.',fLinks:'Quick links',unav:'This project is not available right now.',gz:'Zoom image',gp:'Previous',gnx:'Next',aboutT:'About',a1:'I’m ChicoZAA. I build games, apps and websites, and design visual identities with a street-art spirit.',a2:'Every project here starts as a dream, becomes a build, then turns into something you can play.',contactBtn:'Contact me',boxT:'An independent studio blending games, design and code.',contactT:'Contact',cSub:'Pick the channel that suits you.',tileMore:'View more',tiles:[['Games','Fun, standout games for everyone'],['Apps','Useful apps and tools'],['Projects','Websites and experiments'],['Designs','Professional design work']],types:{game:'Game',app:'App',project:'Project',design:'Design'},act:{game:'Play now',app:'Download',project:'Open',design:'View'},st:{live:'Live',dev:'In development',soon:'Coming soon'},empty:'No results. Try another word or category.',noUrl:'No link added for this project yet. Add one from ⚙.',count:'projects',tabNote:'Open in new tab',close:'Close',mgT:'Manage projects',mgH:'Changes are saved in your browser. Copy the JSON into SEED in the file to publish them for everyone.',fT:'Title',fC:'Category',fD:'Arabic description',fE:'English description',fS:'Status',fU:'Project link',fI:'Cover image link',fG:'Tags (comma separated)',fM:'Run inside the page (iframe)',fF:'Featured',save:'Save',clear:'Clear',exp:'Copy JSON',reset:'Restore samples',edit:'Edit',del:'Delete',saved:'Saved',deleted:'Deleted',copied:'JSON copied',conf:'Confirm?',score:'Score',over:'Game over — tap to retry'}};
 Object.assign(S.ar,{mgT:'لوحة الإدارة',mgH:'دخول المالك فقط.',em:'البريد الإلكتروني',pw:'كلمة المرور',login:'دخول',logout:'تسجيل خروج',imp:'استيراد المشاريع الحالية',fP:'صورة الغلاف (من الهاتف)',fI:'أو رابط صورة (https)',fV:'متاح',na:'غير متاح',noCfg:'أضف SB_URL و SB_KEY داخل الملف (راجع SETUP_AR.md).',deny:'هذا الحساب ليس مديرًا.',bad:'بيانات الدخول غير صحيحة',out:'تم تسجيل الخروج',fail:'تعذّر التنفيذ',badImg:'تعذّر قراءة الصورة',bi:'مدمج — استورده للتعديل'});
 Object.assign(S.en,{mgT:'Admin dashboard',mgH:'Owner access only.',em:'Email',pw:'Password',login:'Sign in',logout:'Sign out',imp:'Import current projects',fP:'Cover image (from phone)',fI:'or image link (https)',fV:'Available',na:'Unavailable',noCfg:'Set SB_URL and SB_KEY in the file (see SETUP_AR.md).',deny:'This account is not an admin.',bad:'Wrong email or password',out:'Signed out',fail:'Action failed',badImg:'Could not read the image',bi:'Built-in — import to edit'});
 // ===== ٥) دوال مساعدة وحفظ البيانات في المتصفح =====
@@ -394,27 +437,57 @@ function cov(p){
   if(p.img&&(p.img.indexOf('data:image/')===0||/^https:\/\//.test(p.img)))return '<img loading="lazy" decoding="async" alt="'+esc(p.t)+'" src="'+esc(p.img)+'">';
   return '<svg viewBox="0 0 320 152" preserveAspectRatio="xMidYMid slice"><rect width="320" height="152" fill="#0b0b0e"/><circle cx="230" cy="40" r="90" fill="#d90f23" opacity=".28"/><path d="M0 120 L60 70 L110 100 L180 40 L250 95 L320 60 V152 H0Z" fill="#1a0509"/><path d="M118 96 L124 70 L140 84 L160 58 L180 84 L196 70 L202 96Z" fill="none" stroke="#f4f4f6" stroke-width="4" stroke-linejoin="round" opacity=".85"/></svg>';
 }
+/* بديل تلقائي لغلاف لا يُحمَّل: غلاف الموقع الافتراضي — عرض فقط، لا يمس البيانات أو الروابط */
+document.addEventListener('error',function(e){var i=e.target;if(i&&i.tagName==='IMG'&&i.parentNode&&i.parentNode.classList&&(i.parentNode.classList.contains('cv')||i.parentNode.classList.contains('gz')))i.outerHTML=cov({})},true);
 function desc(p){return lang==='en'?(p.e||p.d):(p.d||p.e)}
 function card(p){
   var off=p.av===false;
   return '<article class="card rv" tabindex="0" role="button" data-id="'+esc(p.id)+'"><div class="cv">'+cov(p)+'<div class="tg"><span>'+L.types[p.type]+'</span>'+(isN(p)?'<span style="background:var(--red);border-color:transparent">'+L.new+'</span>':'')+'</div><span class="st '+stc(p)+'">'+stl(p)+'</span></div><div class="bd"><h3>'+esc(p.t)+'</h3><p>'+esc(desc(p))+'</p><div class="ft"><small>'+(p.tags||[]).slice(0,2).map(function(x){return '#'+esc(x)}).join(' ')+'</small><button class="btn s '+(off?'off':'r')+'" data-act="'+esc(p.id)+'"'+(off?' aria-disabled="true"':'')+'>'+(off?L.na:L.act[p.type])+'</button></div></div></article>';
 }
-function nz(s){return String(s||'').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
+function nz(s){return String(s==null?'':s).toLowerCase().replace(/[\u064B-\u065F\u0670\u0640\u200c-\u200f]/g,'').replace(/[أإآٱ]/g,'ا').replace(/[ىی]/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[٠-٩]/g,function(d){return d.charCodeAt(0)-1632}).replace(/[۰-۹]/g,function(d){return d.charCodeAt(0)-1776}).replace(/\s+/g,' ').trim()}
+/* الفلتر المحدد حاليًا (الكل / نوع / جديد) — يُطبَّق على القائمة وعلى نتائج البحث معًا */
+function fl(p){if(st.f==='new'&&!isN(p))return false;if(TY.indexOf(st.f)>-1&&p.type!==st.f)return false;return true}
 function ok(p){
   var q=nz(st.q.trim());
-  if(!q){if(st.f==='new'&&!isN(p))return false;if(TY.indexOf(st.f)>-1&&p.type!==st.f)return false;return true}
+  if(!q)return fl(p);
   var h=nz([p.t,p.d,p.e,S.ar.types[p.type],S.en.types[p.type],p.type,(p.tags||[]).join(' ')].join(' '));
   return q.split(/\s+/).every(function(w){return h.indexOf(w)>-1});
 }
+/* ===== ترتيب نتائج البحث بدرجة التطابق — محلي بالكامل على البيانات المحمّلة (بدون أي طلب) ===== */
+function nf(p){var n=p._n;if(n)return n;var tg=Array.isArray(p.tags)?p.tags.join(' '):String(p.tags||'');
+  return p._n={t:nz(p.t),d:nz((p.d||'')+' '+(p.e||'')),c:nz([S.ar.types[p.type],S.en.types[p.type],p.type,tg].join(' '))}}
+function pl(t,q){var k=t.indexOf(q),b=Math.max(0,50-(t.length-q.length));return t===q?1000:k===0?800+b:k>-1?600+b:0}
+function noAl(w){return w.length>3&&w.indexOf('ال')===0?w.slice(2):''}
+function score(p,q,ws){var n=nf(p),t=n.t,s=0,r=pl(t,q),q2=noAl(q);  /* ١) مطابق كامل ٢) بداية الاسم ٣) داخل الاسم (الأقصر أولًا) */
+  if(r)return r;if(q2&&(r=pl(t,q2)))return r;
+  for(var i=0;i<ws.length;i++){var w=ws[i],w2=noAl(w),a;
+    if(t.indexOf(w)>-1||(w2&&t.indexOf(w2)>-1))a=(' '+t).indexOf(' '+w)>-1?320:300;
+    else if(n.c.indexOf(w)>-1||(w2&&n.c.indexOf(w2)>-1))a=150;    /* ٤) التصنيف أو الوسوم */
+    else if(n.d.indexOf(w)>-1||(w2&&n.d.indexOf(w2)>-1))a=50;     /* ٥) الوصف */
+    else return 0;
+    s+=a}
+  return Math.min(s,590)}
+function find(q){if(!q)return list.filter(ok);var ws=q.split(' '),r=[];
+  list.forEach(function(p,i){if(!fl(p))return;var s=score(p,q,ws);if(s)r.push({p:p,s:s,i:i})});
+  r.sort(function(a,b){return b.s-a.s||a.i-b.i});return r.map(function(x){return x.p})}
 var EMPTY='<svg viewBox="0 0 90 70"><path d="M14 56 L20 22 L36 38 L45 12 L54 38 L70 22 L76 56Z" fill="none" stroke="#d90f23" stroke-width="4" stroke-linejoin="round"/><path d="M30 64 L60 64" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/><path d="M38 30 l14 14 m0-14 l-14 14" stroke="#f4f4f6" stroke-width="3" stroke-linecap="round"/></svg>';
 var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.05}):null;
 function rv(){$$('.rv:not(.in)').forEach(function(el){io?io.observe(el):el.classList.add('in')})}
 // عرض الكروت في كل الأقسام
-function render(){
-  var items=list.filter(ok);
-  $('#gr').innerHTML=items.length?items.map(card).join(''):'<div class="empty">'+EMPTY+L.empty+'</div>';
+var lastList=null,lastSig='';
+/* يعيد رسم قسم "كل المشاريع" فقط (يُستخدم عند الكتابة في البحث دون إعادة رسم باقي الصفحة) */
+function grid(){
+  var q=nz(st.q),items=find(q),sig=lang+'|'+st.f+'|'+q+'|'+items.map(function(p){return p.id}).join(',');
   var tl={all:L.featured,game:L.nav[1],app:L.nav[2],project:L.nav[3],design:L.nav[4],new:L.new};
-  $('#ttl').textContent=st.f==='all'?(lang==='en'?'All Projects':'كل المشاريع'):tl[st.f];$('#cnt').textContent=items.length+' '+L.count;
+  $('#ttl').textContent=q?(lang==='en'?'Search results':'نتائج البحث'):st.f==='all'?(lang==='en'?'All Projects':'كل المشاريع'):tl[st.f];$('#cnt').textContent=items.length+' '+L.count;
+  if(list===lastList&&sig===lastSig)return;lastList=list;lastSig=sig;
+  var g=$('#gr');g.classList.toggle('sr',!!q);
+  g.innerHTML=items.length?items.map(card).join(''):'<div class="empty">'+EMPTY+L.empty+(q?'<div><button type="button" class="btn s" data-clr style="margin-top:14px">'+(lang==='en'?'Clear search':'مسح البحث')+'</button></div>':'')+'</div>';
+  rv();
+}
+function clr(){$('#q').value='';$('#qc').hidden=true;st.q='';grid();$('#q').focus()}
+function render(){
+  grid();
   $$('.pill').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.f===st.f)});
   $$('.links a,.dn a').forEach(function(a){a.classList.toggle('on',a.dataset.f===st.f&&st.f!=='all')});
   var ft=list.filter(function(p){return p.feat});$('#fs').innerHTML=ft.map(card).join('');$('#fs').dataset.n=Math.min(ft.length,5);$('#feat').style.display=ft.length?'':'none';
@@ -442,16 +515,35 @@ function chrome(){
 // ===== ٧) نافذة التفاصيل واللعبة الصغيرة =====
 /* modal */
 var last=null,raf=0;
+var gl=[],gi=0;
+function gset(i){if(!gl.length)return;gi=(i+gl.length)%gl.length;var im=$('#gim');if(im)im.src=gl[gi];var c=$('#gc');if(c)c.textContent=(gi+1)+' / '+gl.length;$$('#gd button').forEach(function(b,k){b.setAttribute('aria-current',k===gi)});var z=$('#lbi');if(z)z.src=gl[gi]}
+function lbOpen(){lbClose();var d=document.createElement('div');d.className='lb';d.id='lb';d.setAttribute('role','dialog');d.setAttribute('aria-label',L.gz);d.innerHTML='<img id="lbi" alt="" src="'+esc(gl[gi])+'"><button type="button" class="lbx" aria-label="'+L.close+'">✕</button>';d.onclick=lbClose;$('#ov').appendChild(d);d.querySelector('.lbx').focus()}
+function lbClose(){var d=$('#lb');if(d){d.remove();var z=$('#gz');if(z)z.focus()}}
 function openM(id){
   var p=findP(id);if(!p)return;last=document.activeElement;
-  var safe=/^(https:\/\/|\.\/)/.test(p.url||'');
-  var top=p.play==='dodge'&&p.av!==false?'<canvas id="gm" width="320" height="380"></canvas>':(p.embed&&safe&&p.av!==false?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>':'<div class="cv" style="aspect-ratio:16/8">'+cov(p)+'</div>');
-  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><span class="st '+stc(p)+'" style="position:static;display:inline-block">'+stl(p)+'</span> <span style="color:var(--mut)">'+L.types[p.type]+'</span><h2>'+esc(p.t)+'</h2><p style="color:var(--mut);margin:0">'+esc(desc(p))+'</p><div class="chips">'+(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('')+'</div><div class="row">'+(p.play==='dodge'&&p.av!==false?'':'<button class="btn r" id="go"'+(p.av===false?' disabled':'')+'>'+L.act[p.type]+'</button>')+(p.embed&&safe?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
-  $('#ov').classList.add('on');$('#mx').onclick=$('#mc').onclick=closeM;$('#mx').focus();
-  var g=$('#go');if(g)g.onclick=function(){if(safe)window.open(p.url,'_blank','noopener,noreferrer');else toast(L.noUrl)};
-  if(p.play==='dodge'&&p.av!==false)dodge($('#gm'));
+  var safe=/^(https:\/\/|\.\/)/.test(p.url||''),dd=p.play==='dodge'&&p.av!==false,live=p.av!==false,emb=p.embed&&safe&&live&&!dd;
+  var ex=(p.g||[]).filter(function(u){return /^(https:\/\/|data:image\/)/.test(u)});
+  gl=(!dd&&!emb&&ex.length)?(p.img?[p.img]:[]).concat(ex):[];gi=0;
+  var top=dd?'<canvas id="gm" width="320" height="380"></canvas>':emb?'<iframe class="fr" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups" src="'+esc(p.url)+'" title="'+esc(p.t)+'"></iframe>'
+    :gl.length?'<div class="cv m-cover m-gal"><button type="button" class="gz" id="gz" aria-label="'+L.gz+'"><img id="gim" src="'+esc(gl[0])+'" alt="'+esc(p.t)+'" decoding="async"></button>'+(gl.length>1?'<button type="button" class="gn pv" data-gn="-1" aria-label="'+L.gp+'">'+(lang==='ar'?'›':'‹')+'</button><button type="button" class="gn nx" data-gn="1" aria-label="'+L.gnx+'">'+(lang==='ar'?'‹':'›')+'</button><span class="gc" id="gc">1 / '+gl.length+'</span>':'')+'</div>'+(gl.length>1?'<div class="gd" id="gd">'+gl.map(function(u,k){return '<button type="button" data-g="'+k+'" aria-label="'+(k+1)+'"'+(k?'':' aria-current="true"')+'>'+(k+1)+'</button>'}).join('')+'</div>':'')
+    :'<div class="cv m-cover">'+cov(p)+'</div>';
+  var d=desc(p),tg=(p.tags||[]).map(function(x){return '<span>#'+esc(x)+'</span>'}).join('');
+  var main=dd?'':!live?'<button class="btn off" id="go" disabled aria-disabled="true">'+L.na+'</button>':!safe?'<button class="btn off" id="go" aria-disabled="true">'+L.na+'</button>':'<button class="btn r" id="go">'+L.act[p.type]+'</button>';
+  $('#mw').innerHTML='<button class="x" id="mx" aria-label="'+L.close+'">✕</button>'+top+'<div class="in"><div class="m-meta"><span class="st '+stc(p)+'" style="position:static;display:inline-block">'+stl(p)+'</span><span class="m-type">'+L.types[p.type]+'</span>'+(isN(p)?'<span class="m-type m-new">'+L.new+'</span>':'')+'</div><h2 id="mt">'+esc(p.t)+'</h2>'+(d?'<p class="m-desc">'+esc(d)+'</p>':'')+(live?'':'<p class="m-note">'+L.unav+'</p>')+(tg?'<div class="chips">'+tg+'</div>':'')+'<div class="row">'+main+(emb?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(p.url)+'">'+L.tabNote+'</a>':'')+'<button class="btn" id="mc">'+L.close+'</button></div></div>';
+  $('#ov').setAttribute('aria-labelledby','mt');$('#ov').classList.add('on');document.documentElement.classList.add('mo');$('#mw').scrollTop=0;$('#mx').onclick=$('#mc').onclick=closeM;$('#mx').focus();
+  $('#mw').onclick=function(e){var t=e.target.closest&&e.target.closest('[data-g],[data-gn],#gz');if(!t)return;if(t.id==='gz')lbOpen();else if(t.dataset.gn)gset(gi+ +t.dataset.gn);else gset(+t.dataset.g)};
+  var g=$('#go');if(g&&!g.disabled)g.onclick=function(){if(safe&&live)window.open(p.url,'_blank','noopener,noreferrer');else toast(L.noUrl)};
+  if(dd)dodge($('#gm'));
 }
-function closeM(){cancelAnimationFrame(raf);$('#mw').innerHTML='';$('#ov').classList.remove('on');if(last&&last.focus)last.focus()}
+/* نافذة التفاصيل: Esc يغلق التكبير أولًا، الأسهم للمعرض (مع مراعاة RTL)، وTab يبقى داخل النافذة */
+document.addEventListener('keydown',function(e){
+  if(!$('#ov').classList.contains('on'))return;var lb=$('#lb');
+  if(e.key==='Escape'&&lb){e.stopImmediatePropagation();lbClose();return}
+  if(gl.length>1&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();gset(gi+((e.key==='ArrowRight')===(lang!=='ar')?1:-1));return}
+  if(e.key==='Tab'){var r=lb||$('#mw'),f=[].slice.call(r.querySelectorAll('button:not([disabled]),a[href]')).filter(function(x){return x.offsetParent!==null});if(!f.length)return;var a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+},true);
+function closeM(){cancelAnimationFrame(raf);lbClose();document.documentElement.classList.remove('mo');$('#mw').innerHTML='';$('#ov').classList.remove('on');if(last&&last.focus)last.focus()}
 function dodge(c){
   var x=c.getContext('2d'),W=320,H=380,px=W/2,bl,sc,dead,t;
   function init(){bl=[];sc=0;dead=false;t=0}init();
@@ -477,7 +569,7 @@ try{if(SB_URL&&SB_KEY&&window.supabase)sb=window.supabase.createClient(SB_URL,SB
 function isN(p){return p.at>=6&&(p.at<1e6||Date.now()-p.at<12096e5)}
 function stc(p){return p.av===false?'soon':p.st}
 function stl(p){return p.av===false?L.na:L.st[p.st]}
-function m2p(r){return{id:r.id,type:r.type,t:r.title,d:r.desc_ar,e:r.desc_en,tags:r.tags||[],st:r.status,av:r.available,url:r.url||'',embed:r.embed,img:r.cover||'',feat:r.featured,play:r.play||'',seed:r.seed_id,at:Date.parse(r.created_at)}}
+function m2p(r){return{id:r.id,type:r.type,t:r.title,d:r.desc_ar,e:r.desc_en,tags:r.tags||[],st:r.status,av:r.available,url:r.url||'',embed:r.embed,img:r.cover||'',feat:r.featured,play:r.play||'',g:Array.isArray(r.gallery)?r.gallery:[],seed:r.seed_id,at:Date.parse(r.created_at)}}
 function fail(e){toast(L.fail+(e&&e.message?' — '+e.message:''))}
 function msg(t){$('#am').textContent=t||''}
 /* ===== تحميل البيانات: أعمدة محددة + كاش محلي 10 دقائق + بدون Realtime ===== */
@@ -603,8 +695,8 @@ document.addEventListener('keydown',function(e){
 });
 $('#ov').addEventListener('click',function(e){if(e.target===this)closeM()});
 $('#bg').onclick=function(){var o=$('#dn').classList.toggle('on');this.setAttribute('aria-expanded',o)};
-var qt;$('#q').oninput=function(){var v=this.value;$('#qc').hidden=!v;clearTimeout(qt);qt=setTimeout(function(){st.q=v;render()},60)};
-$('#qc').onclick=function(){$('#q').value='';this.hidden=true;st.q='';render();$('#q').focus()};
+var qt;$('#q').oninput=function(){var v=this.value;$('#qc').hidden=!v;clearTimeout(qt);qt=setTimeout(function(){st.q=v;grid()},30)};
+$('#qc').onclick=clr;$('#q').addEventListener('keydown',function(e){if(e.key==='Escape')clr()});$('#gr').addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-clr]'))clr()});
 $('#lang').onclick=function(){lang=lang==='ar'?'en':'ar';sv(LK,lang);chrome()};
 // ===== ١٠) حركة الجزيئات الحمراء =====
 /* particles */
